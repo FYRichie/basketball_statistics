@@ -18,7 +18,6 @@ function main(app) {
   app.post("/api/updatePersonalStat", wrap(personalStatRoute.updatePersonalStat));
   app.post("/api/deletePersonalStat", wrap(personalStatRoute.deletePersonalStat));
   app.post("/api/deletePersonalStatByGame", wrap(personalStatRoute.deletePersonalStatByGame));
-  app.post("/api/findUserPersonalStat", wrap(personalStatRoute.findUserPersonalStat));
 }
 
 export default main;
