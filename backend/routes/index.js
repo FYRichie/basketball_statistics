@@ -1,14 +1,23 @@
 /** @format */
 
-import gameRoute from "./game";
-import assistRoute from "./assist";
-import blockRoute from "./block";
-import foulRoute from "./foul";
-import pointRoute from "./point";
-import reboundRoute from "./rebound";
-import stealRoute from "./steal";
-import turnoverRoute from "./turnover";
-import personalStatRoute from "./personalStat";
+// import gameRoute from "./game";
+// import assistRoute from "./assist";
+// import blockRoute from "./block";
+// import foulRoute from "./foul";
+// import pointRoute from "./point";
+// import reboundRoute from "./rebound";
+// import stealRoute from "./steal";
+// import turnoverRoute from "./turnover";
+// import personalStatRoute from "./personalStat";
+let gameRoute = require("./game")
+let assistRoute = require("./assist");
+let blockRoute = require("./block");
+let foulRoute = require("./foul");
+let pointRoute = require("./point");
+let reboundRoute = require("./rebound");
+let stealRoute = require("./steal");
+let turnoverRoute = require("./turnover");
+let personalStatRoute = require("./personalStat");
 const wrap = (fn) => (...args) => fn(...args).catch(args[2]);
 
 function main(app) {
@@ -55,4 +64,5 @@ function main(app) {
   app.post("/api/updateTurnover", wrap(turnoverRoute.updateTurnover));
 }
 
-export default main;
+// export default main;
+module.exports = main;

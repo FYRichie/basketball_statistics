@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Creating a schema, sort of like working with an ORM
-const FoulSchema = new Schema({
+const PointSchema = new Schema({
   gameId: {
     type: String,
     required: [true, "gameId field is required."],
@@ -29,7 +29,7 @@ const FoulSchema = new Schema({
 });
 
 // Creating a table within database with the defined schema
-const Foul = mongoose.model("foul", FoulSchema);
+const Point = mongoose.model("point", PointSchema);
 
 // Exporting table for querying and mutating
-module.exports = Foul;
+module.exports = Point;
