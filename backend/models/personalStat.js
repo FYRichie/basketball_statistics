@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 
 // Creating a schema, sort of like working with an ORM
 const PersonalStatSchema = new Schema({
-  gameID: {
+  gameId: {
     type: String,
-    required: [true, "GameID field is required."],
+    required: [true, "GameId field is required."],
   },
   number: {
     type: String,
