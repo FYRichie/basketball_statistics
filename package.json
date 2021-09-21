@@ -3,16 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/cli": "^7.15.7",
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
     "@material-ui/core": "^4.12.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.4",
-    "babel": "^6.23.0",
-    "babel-node": "0.0.1-security",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -32,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node ./backend/server.js",
+    "nodemon": "nodemon",
     "clean": "rimraf dist-server"
   },
   "eslintConfig": {
@@ -52,9 +48,10 @@
       "last 1 safari version"
     ]
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/node": "^7.15.4"
   }
 }
