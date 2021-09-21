@@ -8,18 +8,20 @@ require("dotenv").config();
 const baseURL = process.env.REACT_APP_baseURL || "http://localhost:4000";
 const instance = axios.create({ baseURL: baseURL + "/api" });
 
-const createGame = async (payload) => {
+const createGame = async (date, opponent) => {
   const {
     data: { message, id },
-  } = await instance.post("/createGame", { user: payload });
-
+  } = await instance.post("/createGame", { game: {
+    date: date,
+    opponent: opponent
+  } });
   return id;
 };
 
 const findGame = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findGame", { constrain, constrain });
+  } = await instance.post("/findGame", { constrain: constrain });
   return data;
 };
 
@@ -37,10 +39,14 @@ const updateGame = async (id, myGame) => {
   return message;
 };
 
-const createPersonalStat = async (payload) => {
+const createPersonalStat = async (gameId, number, name) => {
   const {
     data: { id },
-  } = await instance.post("/createPersonalStat", { user: payload });
+  } = await instance.post("/createPersonalStat", { perosnalStat: {
+    gameId: gameId,
+    number: number,
+    name: name
+  } });
 
   return id;
 };
@@ -48,7 +54,7 @@ const createPersonalStat = async (payload) => {
 const findPersonalStat = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findPersonalStat", { constrain, constrain });
+  } = await instance.post("/findPersonalStat", { constrain: constrain });
   return data;
 };
 
@@ -83,7 +89,7 @@ const createAssist = async (gameId, personId, quarter) => {
 const findAssist = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findAssist", { constrain, constrain });
+  } = await instance.post("/findAssist", { constrain: constrain });
   return data;
 };
 
@@ -111,7 +117,7 @@ const createBlock = async (gameId, personId, quarter) => {
 const findBlock = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findBlock", { constrain, constrain });
+  } = await instance.post("/findBlock", { constrain: constrain });
   return data;
 };
 
@@ -140,7 +146,7 @@ const createFoul = async (gameId, personId, quarter, foulType) => {
 const findFoul = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findFoul", { constrain, constrain });
+  } = await instance.post("/findFoul", { constrain: constrain });
   return data;
 };
 
@@ -170,7 +176,7 @@ const createPoint = async (gameId, personId, quarter, pointType, made) => {
 const findPoint = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findPoint", { constrain, constrain });
+  } = await instance.post("/findPoint", { constrain: constrain });
   return data;
 };
 
@@ -190,6 +196,7 @@ const createRebound = async (gameId, personId, quarter, reboundType) => {
       personId: personId,
       quarter: quarter,
       reboundType: reboundType
+      // 'offensive', 'defensive'
     } 
   });
 
@@ -199,7 +206,7 @@ const createRebound = async (gameId, personId, quarter, reboundType) => {
 const findRebound = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findRebound", { constrain, constrain });
+  } = await instance.post("/findRebound", { constrain: constrain });
   return data;
 };
 
@@ -227,7 +234,7 @@ const createSteal = async (gameId, personId, quarter) => {
 const findSteal = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findSteal", { constrain, constrain });
+  } = await instance.post("/findSteal", { constrain: constrain });
   return data;
 };
 
@@ -255,7 +262,7 @@ const createTurnover = async (gameId, personId, quarter) => {
 const findTurnover = async (constrain) => {
   const {
     data: { data },
-  } = await instance.post("/findTurnover", { constrain, constrain });
+  } = await instance.post("/findTurnover", { constrain: constrain });
   return data;
 };
 
