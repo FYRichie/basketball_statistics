@@ -14,8 +14,11 @@ import {
     AppBar,
     Toolbar,
     IconButton,
+    Modal,
+    TimePicker
 } from "@material-ui/core";
 import { EditOutlined } from "@material-ui/icons";
+import GameForm from "./gameForm";
 
 const useStyles = makeStyles((theme) => {});
 
@@ -42,6 +45,8 @@ function GameStatistics() {
     const [opponent, setOpponent] = useState("");
     const [changeOpponent, setChangeOpponent] = useState(false);
     const [opponentRequire, setOpponentRequire] = useState(true);
+    const [gameModal, setGameModal] = useState(false);
+    const [gameId, setGameId] = useState(null);
 
     const get_type = () => {
         return columns.map((c) => {
@@ -53,7 +58,8 @@ function GameStatistics() {
         });
     };
     const startNewGame = () => {
-        setUnfinishedGame(true);
+        // setUnfinishedGame(true);
+        setGameModal(true);
     };
     const handleChangeOpponent = (e) => {
         setOpponent(e.target.value);
@@ -116,9 +122,14 @@ function GameStatistics() {
             </Paper>
         );
     return (
+        <div>
         <Button variant="outlined" onClick={startNewGame}>
             新增比賽
         </Button>
+        <GameForm gameModal={gameModal} setGameModal={setGameModal}
+            setUnfinishedGame={setUnfinishedGame}
+            setGameId={setGameId} />
+        </div>
     );
 }
 
