@@ -1,11 +1,9 @@
-import AddPlayer from "./AddPlayer";
-import CountStatistics from "./CountStatistics";
+import GameStatistics from "./gameStatistics";
 
 function App() {
     return (
         <div>
-            {/* <AddPlayer /> */}
-            <CountStatistics />
+            <GameStatistics />
         </div>
     );
 }
