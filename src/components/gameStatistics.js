@@ -8,7 +8,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Button,
     TextField,
     Box,
     AppBar,
@@ -16,6 +15,7 @@ import {
     IconButton,
 } from "@material-ui/core";
 import { EditOutlined } from "@material-ui/icons";
+import { BrowserRouter, Route } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {});
 
@@ -37,8 +37,8 @@ const columns = [
     { id: "playerStatus", label: "上下場", minWidth: 50 },
 ];
 
-function GameStatistics() {
-    const [unfinishedGame, setUnfinishedGame] = useState(false); // may set to true when start new game or db returns there's an unfinished game
+function GameStatisticsComponent() {
+    // const [unfinishedGame, setUnfinishedGame] = useState(false); // may set to true when start new game or db returns there's an unfinished game
     const [opponent, setOpponent] = useState("");
     const [changeOpponent, setChangeOpponent] = useState(false);
     const [opponentRequire, setOpponentRequire] = useState(true);
@@ -52,9 +52,6 @@ function GameStatistics() {
             );
         });
     };
-    const startNewGame = () => {
-        setUnfinishedGame(true);
-    };
     const handleChangeOpponent = (e) => {
         setOpponent(e.target.value);
         if (opponent !== "") setOpponentRequire(false);
@@ -66,60 +63,64 @@ function GameStatistics() {
         setChangeOpponent(true);
     };
 
-    if (unfinishedGame)
-        return (
-            <Paper>
-                <Box sx={{ flexGrow: 1 }}>
-                    <AppBar position="static">
-                        <Toolbar>
-                            {changeOpponent ? (
-                                <TextField
-                                    variant="outlined"
-                                    defaultValue={opponent}
-                                    required={opponentRequire}
-                                    label="對手"
-                                    onChange={handleChangeOpponent}
-                                    onKeyUp={handleOpponentKeyUp}
-                                />
-                            ) : (
-                                <>
-                                    <div>對手：{opponent}</div>
-                                    <IconButton onClick={editOpponent}>
-                                        <EditOutlined />
-                                    </IconButton>
-                                </>
-                            )}
-                        </Toolbar>
-                    </AppBar>
-                </Box>
-                <TableContainer sx={{ maxHeight: 500 }}>
-                    <Table stickyHeader>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center" colSpan={2}>
-                                    球員
-                                </TableCell>
-                                <TableCell align="center" colSpan={4}>
-                                    得分
-                                </TableCell>
-                                <TableCell align="center" colSpan={3}>
-                                    籃板
-                                </TableCell>
-                                <TableCell align="center" colSpan={6}>
-                                    其他
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>{get_type()}</TableRow>
-                        </TableHead>
-                    </Table>
-                </TableContainer>
-            </Paper>
-        );
     return (
-        <Button variant="outlined" onClick={startNewGame}>
-            新增比賽
-        </Button>
+        <Paper>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        {changeOpponent ? (
+                            <TextField
+                                variant="outlined"
+                                defaultValue={opponent}
+                                required={opponentRequire}
+                                label="對手"
+                                onChange={handleChangeOpponent}
+                                onKeyUp={handleOpponentKeyUp}
+                            />
+                        ) : (
+                            <>
+                                <div>對手：{opponent}</div>
+                                <IconButton onClick={editOpponent}>
+                                    <EditOutlined />
+                                </IconButton>
+                            </>
+                        )}
+                    </Toolbar>
+                </AppBar>
+            </Box>
+            <TableContainer sx={{ maxHeight: 500 }}>
+                <Table stickyHeader>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center" colSpan={2}>
+                                球員
+                            </TableCell>
+                            <TableCell align="center" colSpan={4}>
+                                得分
+                            </TableCell>
+                            <TableCell align="center" colSpan={3}>
+                                籃板
+                            </TableCell>
+                            <TableCell align="center" colSpan={6}>
+                                其他
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>{get_type()}</TableRow>
+                    </TableHead>
+                </Table>
+            </TableContainer>
+        </Paper>
     );
 }
 
-export default GameStatistics;
+export default function GameStatistics(props) {
+    return (
+        <BrowserRouter>
+            <Route
+                exact
+                path={"/Game/" + props.gameID}
+                component={GameStatisticsComponent}
+            />
+        </BrowserRouter>
+    );
+}
