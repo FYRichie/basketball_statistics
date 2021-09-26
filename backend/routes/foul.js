@@ -34,15 +34,11 @@ exports.deleteFoul = async (req, res) => {
 exports.updateFoul = async (req, res) => {
   let id = req.body.id;
   let new_foul = req.body.foul;
-  await Foul.updateOne(
-    { id: id },
-    new_foul,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Foul.updateOne({ id: id }, new_foul, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };

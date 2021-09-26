@@ -34,15 +34,11 @@ exports.deleteAssist = async (req, res) => {
 exports.updateAssist = async (req, res) => {
   let id = req.body.id;
   let new_assist = req.body.assist;
-  await Assist.updateOne(
-    { id: id },
-    new_assist,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Assist.updateOne({ id: id }, new_assist, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };

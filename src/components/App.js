@@ -1,11 +1,11 @@
 import GameStatistics from "./gameStatistics";
 
 function App() {
-    return (
-        <div>
-            <GameStatistics />
-        </div>
-    );
+  return (
+    <div>
+      <GameStatistics />
+    </div>
+  );
 }
 
 export default App;

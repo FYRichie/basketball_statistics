@@ -15,16 +15,16 @@ const GameSchema = new Schema({
   },
   ourScore: {
     type: Number,
-    required: false
+    required: false,
   },
   opponentScore: {
     type: Number,
-    required: false
+    required: false,
   },
   win: {
     type: Boolean,
-    required: false
-  }
+    required: false,
+  },
 });
 
 // Creating a table within database with the defined schema

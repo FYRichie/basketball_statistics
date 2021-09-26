@@ -34,15 +34,11 @@ exports.deleteSteal = async (req, res) => {
 exports.updateSteal = async (req, res) => {
   let id = req.body.id;
   let new_steal = req.body.steal;
-  await Steal.updateOne(
-    { id: id },
-    new_steal,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Steal.updateOne({ id: id }, new_steal, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };

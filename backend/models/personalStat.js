@@ -19,71 +19,71 @@ const PersonalStatSchema = new Schema({
   },
   time: {
     type: Number,
-    required: false
+    required: false,
   },
   point: {
     type: Number,
-    required: false
+    required: false,
   },
   fieldGoalMade: {
     type: Number,
-    required: false
+    required: false,
   },
   fieldGoalAttempt: {
     type: Number,
-    required: false
+    required: false,
   },
   fieldGoalPercentage: {
     type: Number,
-    required: false
+    required: false,
   },
   threePointMade: {
     type: Number,
-    required: false
+    required: false,
   },
   threePointAttempt: {
     type: Number,
-    required: false
+    required: false,
   },
   threePointPercentage: {
     type: Number,
-    required: false
+    required: false,
   },
   freeThrowMade: {
     type: Number,
-    required: false
+    required: false,
   },
   freeThrowAttempt: {
     type: Number,
-    required: false
+    required: false,
   },
   freeThrowPercentage: {
     type: Number,
-    required: false
+    required: false,
   },
   rebound: {
     type: Number,
-    required: false
+    required: false,
   },
   assist: {
     type: Number,
-    required: false
+    required: false,
   },
   steal: {
     type: Number,
-    required: false
+    required: false,
   },
   block: {
     type: Number,
-    required: false
+    required: false,
   },
   turnover: {
     type: Number,
-    required: false
+    required: false,
   },
   personalFoul: {
     type: Number,
-    required: false
+    required: false,
   },
 });
 

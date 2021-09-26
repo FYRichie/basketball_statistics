@@ -34,15 +34,11 @@ exports.deletePoint = async (req, res) => {
 exports.updatePoint = async (req, res) => {
   let id = req.body.id;
   let new_point = req.body.point;
-  await Point.updateOne(
-    { id: id },
-    new_point,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Point.updateOne({ id: id }, new_point, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };

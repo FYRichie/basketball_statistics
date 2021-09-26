@@ -54,15 +54,11 @@ exports.deleteGameById = async (req, res) => {
 exports.updateGame = async (req, res) => {
   let id = req.body.id;
   let new_game = req.body.game;
-  await Game.updateOne(
-    { id: id },
-    new_game,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Game.updateOne({ id: id }, new_game, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };

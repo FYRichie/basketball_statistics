@@ -20,12 +20,12 @@ const PointSchema = new Schema({
   pointType: {
     type: String,
     required: [true, "pointType field is required."],
-    // freethrow, threepoint, fieldgoal 
+    // freethrow, threepoint, fieldgoal
   },
   made: {
     type: Boolean,
     required: [true, "made field is required."],
-  }
+  },
 });
 
 // Creating a table within database with the defined schema

@@ -9,7 +9,7 @@
 // import stealRoute from "./steal";
 // import turnoverRoute from "./turnover";
 // import personalStatRoute from "./personalStat";
-let gameRoute = require("./game")
+let gameRoute = require("./game");
 let assistRoute = require("./assist");
 let blockRoute = require("./block");
 let foulRoute = require("./foul");
@@ -18,7 +18,10 @@ let reboundRoute = require("./rebound");
 let stealRoute = require("./steal");
 let turnoverRoute = require("./turnover");
 let personalStatRoute = require("./personalStat");
-const wrap = (fn) => (...args) => fn(...args).catch(args[2]);
+const wrap =
+  (fn) =>
+  (...args) =>
+    fn(...args).catch(args[2]);
 
 function main(app) {
   app.post("/api/createGame", wrap(gameRoute.createGame));
@@ -27,13 +30,31 @@ function main(app) {
   app.post("/api/findGame", wrap(gameRoute.findGame));
   app.post("/api/findGameById", wrap(gameRoute.findGameById));
   app.post("/api/updateGame", wrap(gameRoute.updateGame));
-  app.post("/api/createPersonalStat", wrap(personalStatRoute.createPersonalStat));
+  app.post(
+    "/api/createPersonalStat",
+    wrap(personalStatRoute.createPersonalStat)
+  );
   app.post("/api/findPersonalStat", wrap(personalStatRoute.findPersonalStat));
-  app.post("/api/findPersonalStatByName", wrap(personalStatRoute.findPersonalStatByName));
-  app.post("/api/findPersonalStatByGame", wrap(personalStatRoute.findPersonalStatByGame));
-  app.post("/api/updatePersonalStat", wrap(personalStatRoute.updatePersonalStat));
-  app.post("/api/deletePersonalStat", wrap(personalStatRoute.deletePersonalStat));
-  app.post("/api/deletePersonalStatByGame", wrap(personalStatRoute.deletePersonalStatByGame));
+  app.post(
+    "/api/findPersonalStatByName",
+    wrap(personalStatRoute.findPersonalStatByName)
+  );
+  app.post(
+    "/api/findPersonalStatByGame",
+    wrap(personalStatRoute.findPersonalStatByGame)
+  );
+  app.post(
+    "/api/updatePersonalStat",
+    wrap(personalStatRoute.updatePersonalStat)
+  );
+  app.post(
+    "/api/deletePersonalStat",
+    wrap(personalStatRoute.deletePersonalStat)
+  );
+  app.post(
+    "/api/deletePersonalStatByGame",
+    wrap(personalStatRoute.deletePersonalStatByGame)
+  );
   app.post("/api/createAssist", wrap(assistRoute.createAssist));
   app.post("/api/deleteAssist", wrap(assistRoute.deleteAssist));
   app.post("/api/findAssist", wrap(assistRoute.findAssist));
