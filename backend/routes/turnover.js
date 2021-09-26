@@ -34,15 +34,11 @@ exports.deleteTurnover = async (req, res) => {
 exports.updateTurnover = async (req, res) => {
   let id = req.body.id;
   let new_turnover = req.body.turnover;
-  await Turnover.updateOne(
-    { id: id },
-    new_turnover,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Turnover.updateOne({ id: id }, new_turnover, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };

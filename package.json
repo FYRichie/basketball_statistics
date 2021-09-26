@@ -24,18 +24,18 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "transpile": "babel ./backend --out-dir dist-server",
-    "build": "npm-run-all clean transpile",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node ./backend/server.js",
     "nodemon": "nodemon",
-    "clean": "rimraf dist-server"
+    "lint": "eslint --ext .js src/* backend/*",
+    "prettier":"prettier --write ."
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "prettier"
     ]
   },
   "browserslist": {
@@ -53,7 +53,10 @@
   "devDependencies": {
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
     "@babel/preset-env": "^7.15.6",
-    "@babel/node": "^7.15.4"
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.4.1"
   }
 }

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 require("dotenv").config();
- //{ path: require("find-config")(".env") }
+//{ path: require("find-config")(".env") }
 // console.log(process.env.REACT_APP_baseURL);
 // console.log(process.env);
 const baseURL = process.env.REACT_APP_baseURL || "http://localhost:4000";
@@ -11,10 +11,12 @@ const instance = axios.create({ baseURL: baseURL + "/api" });
 const createGame = async (date, opponent) => {
   const {
     data: { message, id },
-  } = await instance.post("/createGame", { game: {
-    date: date,
-    opponent: opponent
-  } });
+  } = await instance.post("/createGame", {
+    game: {
+      date: date,
+      opponent: opponent,
+    },
+  });
   return id;
 };
 
@@ -42,11 +44,13 @@ const updateGame = async (id, myGame) => {
 const createPersonalStat = async (gameId, number, name) => {
   const {
     data: { id },
-  } = await instance.post("/createPersonalStat", { perosnalStat: {
-    gameId: gameId,
-    number: number,
-    name: name
-  } });
+  } = await instance.post("/createPersonalStat", {
+    perosnalStat: {
+      gameId: gameId,
+      number: number,
+      name: name,
+    },
+  });
 
   return id;
 };
@@ -68,19 +72,22 @@ const deletePersonalStat = async (id) => {
 const updatePersonalStat = async (id, myPersonalStat) => {
   const {
     data: { message },
-  } = await instance.post("/updatePersonalStat", { id: id, game: myPersonalStat });
+  } = await instance.post("/updatePersonalStat", {
+    id: id,
+    game: myPersonalStat,
+  });
   return message;
 };
 
 const createAssist = async (gameId, personId, quarter) => {
   const {
     data: { id },
-  } = await instance.post("/createAssist", { assist: 
-    {
+  } = await instance.post("/createAssist", {
+    assist: {
       gameId: gameId,
       personId: personId,
       quarter: quarter,
-    } 
+    },
   });
 
   return id;
@@ -103,12 +110,12 @@ const deleteAssist = async (id) => {
 const createBlock = async (gameId, personId, quarter) => {
   const {
     data: { id },
-  } = await instance.post("/createBlock", { block: 
-    {
+  } = await instance.post("/createBlock", {
+    block: {
       gameId: gameId,
       personId: personId,
       quarter: quarter,
-    } 
+    },
   });
 
   return id;
@@ -131,13 +138,13 @@ const deleteBlock = async (id) => {
 const createFoul = async (gameId, personId, quarter, foulType) => {
   const {
     data: { id },
-  } = await instance.post("/createFoul", { foul: 
-    {
+  } = await instance.post("/createFoul", {
+    foul: {
       gameId: gameId,
       personId: personId,
       quarter: quarter,
-      foulType: foulType
-    } 
+      foulType: foulType,
+    },
   });
 
   return id;
@@ -160,14 +167,14 @@ const deleteFoul = async (id) => {
 const createPoint = async (gameId, personId, quarter, pointType, made) => {
   const {
     data: { id },
-  } = await instance.post("/createPoint", { point: 
-    {
+  } = await instance.post("/createPoint", {
+    point: {
       gameId: gameId,
       personId: personId,
       quarter: quarter,
       pointType: pointType,
-      made: made
-    } 
+      made: made,
+    },
   });
 
   return id;
@@ -190,14 +197,14 @@ const deletePoint = async (id) => {
 const createRebound = async (gameId, personId, quarter, reboundType) => {
   const {
     data: { id },
-  } = await instance.post("/createRebound", { rebound: 
-    {
+  } = await instance.post("/createRebound", {
+    rebound: {
       gameId: gameId,
       personId: personId,
       quarter: quarter,
-      reboundType: reboundType
+      reboundType: reboundType,
       // 'offensive', 'defensive'
-    } 
+    },
   });
 
   return id;
@@ -220,12 +227,12 @@ const deleteRebound = async (id) => {
 const createSteal = async (gameId, personId, quarter) => {
   const {
     data: { id },
-  } = await instance.post("/createSteal", { steal: 
-    {
+  } = await instance.post("/createSteal", {
+    steal: {
       gameId: gameId,
       personId: personId,
-      quarter: quarter
-    } 
+      quarter: quarter,
+    },
   });
 
   return id;
@@ -248,12 +255,12 @@ const deleteSteal = async (id) => {
 const createTurnover = async (gameId, personId, quarter) => {
   const {
     data: { id },
-  } = await instance.post("/createTurnover", { turnover: 
-    {
+  } = await instance.post("/createTurnover", {
+    turnover: {
       gameId: gameId,
       personId: personId,
-      quarter: quarter
-    } 
+      quarter: quarter,
+    },
   });
 
   return id;

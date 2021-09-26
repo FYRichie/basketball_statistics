@@ -3,10 +3,10 @@
 // import routes from "./routes";
 // import mongoose from "mongoose";
 
-var express = require('express');
-var cors = require('cors');
-var routes = require('./routes');
-var mongoose = require('mongoose');
+var express = require("express");
+var cors = require("cors");
+var routes = require("./routes");
+var mongoose = require("mongoose");
 
 require("dotenv").config();
 const app = express();
@@ -33,10 +33,9 @@ const dboptions = {
 // TODO : connect mongodb here
 console.log("start mongoose connect");
 console.log(process.env.MONGO_URL);
-mongoose.connect(process.env.MONGO_URL, dboptions)
-  .catch(error => {
-    console.error(error);
-  });
+mongoose.connect(process.env.MONGO_URL, dboptions).catch((error) => {
+  console.error(error);
+});
 const db = mongoose.connection;
 
 db.on("error", (error) => {

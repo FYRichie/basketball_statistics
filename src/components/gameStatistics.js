@@ -1,15 +1,5 @@
 import React, { useState } from "react";
 import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    InputLabel,
-    makeStyles,
-    MenuItem,
-    Select,
-} from "@material-ui/core";
-import {
     Paper,
     Table,
     TableBody,
@@ -145,6 +135,7 @@ const StickyTableCell = withStyles((theme) => ({
         zIndex: theme.zIndex.appBar + 1,
     },
 }))(TableCell);
+
 
 function GameStatisticsComponent() {
     // const [unfinishedGame, setUnfinishedGame] = useState(false); // may set to true when start new game or db returns there's an unfinished game
@@ -391,6 +382,19 @@ function GameStatisticsComponent() {
             </Dialog>
         </Paper>
     );
+  return (
+    <div>
+      <Button variant="outlined" onClick={startNewGame}>
+        新增比賽
+      </Button>
+      <GameForm
+        gameModal={gameModal}
+        setGameModal={setGameModal}
+        setUnfinishedGame={setUnfinishedGame}
+        setGameId={setGameId}
+      />
+    </div>
+  );
 }
 
 export default function GameStatistics(props) {

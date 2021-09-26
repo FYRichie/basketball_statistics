@@ -34,15 +34,11 @@ exports.deleteRebound = async (req, res) => {
 exports.updateRebound = async (req, res) => {
   let id = req.body.id;
   let new_rebound = req.body.rebound;
-  await Rebound.updateOne(
-    { id: id },
-    new_rebound,
-    function (err) {
-      if (err) {
-        console.log(err)
-        res.status(200).send({ message: "error" });
-      }
+  await Rebound.updateOne({ id: id }, new_rebound, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ message: "error" });
     }
-  );
+  });
   res.status(200).send({ message: "success" });
 };
