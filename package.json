@@ -29,7 +29,7 @@
     "server": "node ./backend/server.js",
     "nodemon": "nodemon",
     "lint": "eslint --ext .js src/* backend/*",
-    "prettier":"prettier --write ."
+    "prettier": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
