@@ -5,11 +5,17 @@ import Starting from "./starting";
 
 function App() {
     const [gameID, setGameID] = useState("1234");
+    const [opponent, setOpponent] = useState("");
     // const [HistoryAndCreateReact, gameID] = historyAndCreate();
     return (
         <React.StrictMode>
             <Starting />
-            <HistoryAndCreate setGameID={setGameID} gameID={gameID} />
+            <HistoryAndCreate
+                setGameID={setGameID}
+                gameID={gameID}
+                setOpponent={setOpponent}
+                opponent={opponent}
+            />
             <GameStatistics gameID={gameID} />
         </React.StrictMode>
     );

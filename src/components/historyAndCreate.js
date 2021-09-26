@@ -4,13 +4,18 @@ import HistoryGames from "./historyGames";
 import CreateNewGame from "./createNewGame";
 
 export default function HistoryAndCreate(props) {
-    const { gameID, setGameID } = props;
+    const { gameID, setGameID, setOpponent, opponent } = props;
 
     const HistoryAndCreateComponent = () => {
         return (
             <>
                 <HistoryGames />
-                <CreateNewGame setGameID={setGameID} gameID={gameID} />
+                <CreateNewGame
+                    setGameID={setGameID}
+                    gameID={gameID}
+                    setOpponent={setOpponent}
+                    opponent={opponent}
+                />
             </>
         );
     };
