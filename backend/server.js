@@ -1,7 +1,12 @@
-import express from "express";
-import cors from "cors";
-import routes from "./routes";
-import mongoose from "mongoose";
+// import express from "express";
+// import cors from "cors";
+// import routes from "./routes";
+// import mongoose from "mongoose";
+
+var express = require('express');
+var cors = require('cors');
+var routes = require('./routes');
+var mongoose = require('mongoose');
 
 require("dotenv").config();
 const app = express();
@@ -23,13 +28,15 @@ app.use(function (req, res, next) {
 const port = process.env.PORT || 4000;
 const dboptions = {
   useNewUrlParser: true,
-  useCreateIndex: true,
-  auto_reconnect: true,
   useUnifiedTopology: true,
-  poolSize: 10,
 };
 // TODO : connect mongodb here
-mongoose.connect(process.env.MONGO_URL, dboptions);
+console.log("start mongoose connect");
+console.log(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL, dboptions)
+  .catch(error => {
+    console.error(error);
+  });
 const db = mongoose.connection;
 
 db.on("error", (error) => {

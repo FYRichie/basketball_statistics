@@ -7,7 +7,7 @@ exports.createPersonalStat = async (req, res) => {
   console.log(data);
   PersonalStat.create(data, (err, personalStat) => {
     if (err) {
-      console.log("create game err");
+      console.log("create personalStat err");
       res.status(403).send({ message: "error" });
     } else {
       res.status(200).send({ message: "success", id: personalStat._id });
@@ -18,19 +18,19 @@ exports.createPersonalStat = async (req, res) => {
 exports.findPersonalStatByName = async (req, res) => {
   let name = req.body.name;
   let personalStats = await PersonalStat.find({ name: name});
-  res.status(200).send({ personalStats: personalStats });
+  res.status(200).send({ data: personalStats });
 };
 
 exports.findPersonalStatByGame = async (req, res) => {
   let gameID = req.body.gameID;
   let personalStats = await PersonalStat.find({ gameID: gameID});
-  res.status(200).send({ personalStats: personalStats });
+  res.status(200).send({ data: personalStats });
 };
 
 exports.findPersonalStat = async (req, res) => {
     let constrain = req.body.constrain
     let personalStats = await PersonalStat.find(constrain);
-    res.status(200).send({ personalStats: personalStats });
+    res.status(200).send({ data: personalStats });
   };
 
 exports.deletePersonalStat = async (req, res) => {

@@ -24,6 +24,8 @@ import {
     withStyles,
 } from "@material-ui/core";
 import { BrowserRouter, Route } from "react-router-dom";
+import { EditOutlined } from "@material-ui/icons";
+import GameForm from "./gameForm";
 
 const useStyles = makeStyles((theme) => {});
 const columns = [
