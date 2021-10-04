@@ -21,6 +21,20 @@ import {
     Select,
 } from "@material-ui/core";
 import { BrowserRouter, Route } from "react-router-dom";
+import {
+    createPoint,
+    createAssist,
+    createBlock,
+    createRebound,
+    createSteal,
+    createTurnover,
+    deletePoint,
+    deleteAssist,
+    deleteBlock,
+    deleteRebound,
+    deleteSteal,
+    deleteTurnover,
+} from "../api";
 
 const columns = [
     { id: "number", label: "背號", minWidth: 50 },
@@ -37,7 +51,7 @@ const columns = [
     { id: "deffensiveRebound", label: "防守籃板", minWidth: 60 },
     { id: "assist", label: "助攻", minWidth: 50 },
     { id: "steal", label: "抄截", minWidth: 50 },
-    { id: "foul", label: "犯規", minWidth: 50 },
+    { id: "foul", label: "犯規", minWidth: 50 }, // add foul type
     { id: "block", label: "阻攻", minWidth: 50 },
     { id: "turnover", label: "失誤", minWidth: 50 },
     { id: "playerStatus", label: "上下場", minWidth: 50 },
@@ -142,6 +156,8 @@ const StickyTableCell = withStyles((theme) => ({
 function GameStatisticsComponent() {
     // const [unfinishedGame, setUnfinishedGame] = useState(false); // may set to true when start new game or db returns there's an unfinished game
     const opponent = "電機"; // may change to get from backend with gameid
+    const URL_parser = window.location.href.split("/");
+    const gameID = URL_parser[URL_parser.length - 1];
     const [openChangeStatistics, setOpenChangeStatistics] = useState(false);
     const [selectedNum, setSelectedNum] = useState("");
     const [selectedName, setSelectedName] = useState("");
@@ -198,19 +214,143 @@ function GameStatisticsComponent() {
                 if (p.num !== playerNum) return p;
                 const _p = p;
                 if (event === "playerStatus") _p.oncourt = !p.oncourt;
-                else if (event === "freeThrowsMade")
+                else if (event === "freeThrowsMade") {
                     _p.score.freethrow.made += add;
-                else if (event === "freeThrowsAttempt")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "made"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "made"
+                        );
+                } else if (event === "freeThrowsAttempt") {
                     _p.score.freethrow.attempt += add;
-                else if (event === "twoPointersMade")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "attempt"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "attempt"
+                        );
+                } else if (event === "twoPointersMade") {
                     _p.score.twopointer.made += add;
-                else if (event === "twoPointersAttempt")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "made"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "made"
+                        );
+                } else if (event === "twoPointersAttempt") {
                     _p.score.twopointer.attempt += add;
-                else if (event === "threePointersMade")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "attempt"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "attempt"
+                        );
+                } else if (event === "threePointersMade") {
                     _p.score.threepointer.made += add;
-                else if (event === "threePointersAttempt")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "made"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "made"
+                        );
+                } else if (event === "threePointersAttempt") {
                     _p.score.threepointer.attempt += add;
-                else _p[event] = p[event] + add;
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "attempt"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "attempt"
+                        );
+                } else if (event === "offensiveRebound") {
+                    _p.rebound.offensive += add;
+                    if (add === 1)
+                        createRebound(gameID, playerNum, period, "offensive");
+                    else deleteRebound(gameID, playerNum, period, "offensive");
+                } else if (event === "deffensiveRebound") {
+                    _p.rebound.deffensive += add;
+                    if (add === 1)
+                        createRebound(gameID, playerNum, period, "deffensive");
+                    else deleteRebound(gameID, playerNum, period, "deffensive");
+                } else if (event === "assist") {
+                    _p.assist += add;
+                    if (add === 1) createAssist(gameID, playerNum, period);
+                    else deleteAssist(gameID, playerNum, period);
+                } else if (event === "steal") {
+                    _p.steal += add;
+                    if (add === 1) createSteal(gameID, playerNum, period);
+                    else deleteSteal(gameID, playerNum, period);
+                } else if (event === "foul") {
+                    _p.foul.push(""); // foul type, count length
+                } else if (event === "block") {
+                    _p.block += add;
+                    if (add === 1) createBlock(gameID, playerNum, period);
+                    else deleteBlock(gameID, playerNum, period);
+                } else if (event === "turnover") {
+                    _p.turnover += add;
+                    if (add === 1) createTurnover(gameID, playerNum, period);
+                    else deleteTurnover(gameID, playerNum, period);
+                }
                 return _p;
             })
         );

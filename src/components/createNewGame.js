@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
+import { createGame } from "../api";
 
 function CreateNewGame(props) {
     const { setGameID, gameID } = props;
@@ -10,7 +11,7 @@ function CreateNewGame(props) {
     };
     const handleCreate = async () => {
         // call axios.js
-        // setGameID(createGame(new Date(), opponent));
+        setGameID(createGame(new Date(), opponent));
         window.location.replace(window.location.origin + "/Game/" + gameID);
     };
 

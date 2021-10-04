@@ -10,12 +10,7 @@ export default function HistoryAndCreate(props) {
         return (
             <>
                 <HistoryGames />
-                <CreateNewGame
-                    setGameID={setGameID}
-                    gameID={gameID}
-                    setOpponent={setOpponent}
-                    opponent={opponent}
-                />
+                <CreateNewGame gameID={gameID} setGameID={setGameID} />
             </>
         );
     };
