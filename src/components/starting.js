@@ -1,19 +1,23 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Container, Grid, Typography } from "@material-ui/core";
 
-const Starting = () => {
-    const history = useHistory();
-    const goToHistoryAndCreate = () => {
-        history.push("/historyorcreate");
-    };
+export default function Starting() {
     return (
-        <>
-            <Button variant="outlined" onClick={goToHistoryAndCreate}>
-                開始
-            </Button>
-        </>
+        <Container maxWidth="xs" alignItems="center" justifyContent="center">
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                style={{ minHeight: "100vh", flexWrap: "nowrap" }}
+            >
+                <Typography variant="h1">NTUEE</Typography>
+                <Typography variant="h3">BASKETBALL</Typography>
+                <Button style={{ margin: "30px" }} variant="outlined" fullWidth href="/HistoryOrCreate">
+                    Start!
+                </Button>
+            </Grid>
+        </Container>
     );
-};
-
-export default Starting;
+}

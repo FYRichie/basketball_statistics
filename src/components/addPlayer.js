@@ -11,26 +11,20 @@ import {
     ListItemText,
     ListItemAvatar,
     Avatar,
+    Button,
+    DialogTitle,
+    DialogContent,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Alert, AlertTitle } from "@mui/material";
 import { createPersonalStat, deletePersonalStat } from "../api";
-import {
-    createPlayersObject,
-    createPlayersDisplayObject,
-} from "./gameStatisticsTool";
+import { createPlayersObject, createPlayersDisplayObject } from "./gameStatisticsTool";
 
 const AddPlayer = (props) => {
     const { gameID } = useParams();
     console.log("add players gameid: ", gameID);
-    const {
-        players,
-        setPlayers,
-        playersObject,
-        setPlayersObject,
-        setPlayersDisplayObject,
-    } = props;
+    const { players, setPlayers, playersObject, setPlayersObject, setPlayersDisplayObject } = props;
     const [playerNum, setPlayerNum] = useState("");
     const [playerName, setPlayerName] = useState("");
     const [openAlert, setOpenAlert] = useState(false);
@@ -53,26 +47,14 @@ const AddPlayer = (props) => {
             setAlertText("");
             setPlayerNum("");
             setPlayerName("");
-            const playerID = await createPersonalStat(
-                gameID,
-                playerNum,
-                playerName
-            );
+            const playerID = await createPersonalStat(gameID, playerNum, playerName);
             // const playerID = Math.random();
 
-            const newPlayers = [
-                ...players,
-                { ID: playerID, num: playerNum, name: playerName },
-            ];
+            const newPlayers = [...players, { ID: playerID, num: playerNum, name: playerName }];
             setPlayers(newPlayers);
-            const _playersObject = createPlayersObject(
-                newPlayers,
-                newPlayers.length - 1,
-                playersObject
-            );
+            const _playersObject = createPlayersObject(newPlayers, newPlayers.length - 1, playersObject);
             setPlayersObject(_playersObject);
-            const playersDisplayObject =
-                createPlayersDisplayObject(_playersObject);
+            const playersDisplayObject = createPlayersDisplayObject(_playersObject);
             setPlayersDisplayObject(playersDisplayObject);
         }
     };
@@ -95,10 +77,7 @@ const AddPlayer = (props) => {
                         <Avatar>{p.num}</Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={p.name} />
-                    <IconButton
-                        onClick={() => handleDeletePlayer(p.ID)}
-                        edge="end"
-                    >
+                    <IconButton onClick={() => handleDeletePlayer(p.ID)} edge="end">
                         <DeleteIcon />
                     </IconButton>
                 </ListItem>
@@ -108,37 +87,53 @@ const AddPlayer = (props) => {
 
     return (
         <>
-            <List>{getPlayerList()}</List>
-            {players.length < 12 ? (
-                <Box>
-                    <TextField
-                        key="set-player-num"
-                        variant="outlined"
-                        value={playerNum}
-                        onChange={handleChangeNum}
-                        label="球員號碼"
-                    />
-                    <TextField
-                        key="set-player-name"
-                        variant="outlined"
-                        value={playerName}
-                        onChange={handleChangeName}
-                        label="球員名"
-                    />
-                    <Tooltip>
-                        <IconButton onClick={handleAddPlayer}>
-                            <AddCircleOutlineOutlinedIcon />
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-            ) : (
-                <div />
-            )}
-            {players.length < 5 ? (
-                <Alert severity="warning">球員人數不足5人</Alert>
-            ) : (
-                <div />
-            )}
+            <DialogTitle>修改球員名單</DialogTitle>
+            <DialogContent>
+                <List>{getPlayerList()}</List>
+                {players.length < 12 ? (
+                    <Box
+                        component="form"
+                        sx={{
+                            "& .MuiTextField-root": { m: 1, width: "25ch" },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <div>
+                            <TextField
+                                key="set-player-num"
+                                variant="outlined"
+                                value={playerNum}
+                                style={{ margin: "0 0 0 10px", width: "100px" }}
+                                onChange={handleChangeNum}
+                                label="球員號碼"
+                            />
+                            <TextField
+                                key="set-player-name"
+                                variant="outlined"
+                                value={playerName}
+                                style={{ margin: "0 0 0 10px" }}
+                                onChange={handleChangeName}
+                                label="球員名"
+                            />
+                            <Tooltip>
+                                <IconButton onClick={handleAddPlayer}>
+                                    <AddCircleOutlineOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </div>
+                    </Box>
+                ) : (
+                    <div />
+                )}
+                {players.length < 5 ? (
+                    <Alert style={{ margin: "10px" }} severity="warning">
+                        球員人數不足5人
+                    </Alert>
+                ) : (
+                    <div />
+                )}
+            </DialogContent>
             <Dialog open={openAlert} onClose={handleCloseAlert}>
                 <Alert severity="error">
                     <AlertTitle>輸入問題</AlertTitle>
