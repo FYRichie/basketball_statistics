@@ -5,14 +5,12 @@ const PersonalStat = require("../models/personalStat");
 
 exports.createPersonalStat = async (req, res) => {
     let data = req.body.personalStat;
-    // console.log(data);
-    await PersonalStat.create(data, (err, personalStat) => {
+    PersonalStat.create(data, (err, personalStat) => {
         if (err) {
             console.log("create personalStat err");
             res.status(403).send({ message: "error" });
         } else {
-            // console.log(personalStat);
-            // personalStat.clone();
+            console.log(personalStat);
             res.status(200).send({ message: "success", id: personalStat._id });
         }
     });
