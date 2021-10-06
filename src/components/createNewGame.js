@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
+} from "@material-ui/core";
 import { createGame } from "../api";
 import { useHistory } from "react-router-dom";
 
@@ -35,7 +42,11 @@ function CreateNewGame(props) {
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCreate} variant="outlined" style={{ margin: "10px" }}>
+                <Button
+                    onClick={handleCreate}
+                    variant="outlined"
+                    style={{ margin: "10px" }}
+                >
                     Create
                 </Button>
             </DialogActions>
