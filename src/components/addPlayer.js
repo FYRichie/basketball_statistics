@@ -11,6 +11,9 @@ import {
     ListItemText,
     ListItemAvatar,
     Avatar,
+    Button,
+    DialogTitle,
+    DialogContent,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -107,37 +110,53 @@ const AddPlayer = (props) => {
 
     return (
         <>
-            <List>{getPlayerList()}</List>
-            {players.length < 12 ? (
-                <Box>
-                    <TextField
-                        key="set-player-num"
-                        variant="outlined"
-                        value={playerNum}
-                        onChange={handleChangeNum}
-                        label="球員號碼"
-                    />
-                    <TextField
-                        key="set-player-name"
-                        variant="outlined"
-                        value={playerName}
-                        onChange={handleChangeName}
-                        label="球員名"
-                    />
-                    <Tooltip>
-                        <IconButton onClick={handleAddPlayer}>
-                            <AddCircleOutlineOutlinedIcon />
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-            ) : (
-                <div />
-            )}
-            {players.length < 5 ? (
-                <Alert severity="warning">球員人數不足5人</Alert>
-            ) : (
-                <div />
-            )}
+            <DialogTitle>修改球員名單</DialogTitle>
+            <DialogContent>
+                <List>{getPlayerList()}</List>
+                {players.length < 12 ? (
+                    <Box
+                        component="form"
+                        sx={{
+                            "& .MuiTextField-root": { m: 1, width: "25ch" },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <div>
+                            <TextField
+                                key="set-player-num"
+                                variant="outlined"
+                                value={playerNum}
+                                style={{ margin: "0 0 0 10px", width: "100px" }}
+                                onChange={handleChangeNum}
+                                label="球員號碼"
+                            />
+                            <TextField
+                                key="set-player-name"
+                                variant="outlined"
+                                value={playerName}
+                                style={{ margin: "0 0 0 10px" }}
+                                onChange={handleChangeName}
+                                label="球員名"
+                            />
+                            <Tooltip>
+                                <IconButton onClick={handleAddPlayer}>
+                                    <AddCircleOutlineOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </div>
+                    </Box>
+                ) : (
+                    <div />
+                )}
+                {players.length < 5 ? (
+                    <Alert style={{ margin: "10px" }} severity="warning">
+                        球員人數不足5人
+                    </Alert>
+                ) : (
+                    <div />
+                )}
+            </DialogContent>
             <Dialog open={openAlert} onClose={handleCloseAlert}>
                 <Alert severity="error">
                     <AlertTitle>輸入問題</AlertTitle>
