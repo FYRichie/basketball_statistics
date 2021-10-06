@@ -17,7 +17,7 @@ function CreateNewGame(props) {
         console.log(id);
         await setGameID(id);
         // console.log(gameID);
-        history.push(`/game/${id}/addplayer`);
+        history.push(`/game/${id}`);
     };
 
     return (
