@@ -9,6 +9,7 @@ exports.createTurnover = async (req, res) => {
             console.log("create turnover err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(turnover);
             res.status(200).send({ message: "success", id: turnover._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findTurnover = async (req, res) => {
 
 exports.deleteTurnover = async (req, res) => {
     let constrain = req.body;
-    await Turnover.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Turnover.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updateTurnover = async (req, res) => {

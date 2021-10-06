@@ -9,6 +9,7 @@ exports.createSteal = async (req, res) => {
             console.log("create steal err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(steal);
             res.status(200).send({ message: "success", id: steal._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findSteal = async (req, res) => {
 
 exports.deleteSteal = async (req, res) => {
     let constrain = req.body;
-    await Steal.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Steal.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updateSteal = async (req, res) => {

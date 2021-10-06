@@ -9,6 +9,7 @@ exports.createFoul = async (req, res) => {
             console.log("create foul err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(foul);
             res.status(200).send({ message: "success", id: foul._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findFoul = async (req, res) => {
 
 exports.deleteFoul = async (req, res) => {
     let constrain = req.body;
-    await Foul.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Foul.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updateFoul = async (req, res) => {

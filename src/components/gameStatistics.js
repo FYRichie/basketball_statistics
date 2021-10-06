@@ -63,7 +63,6 @@ const StickyTableCell = withStyles((theme) => ({
 
 const GameStatisticsComponent = () => {
     const { gameID } = useParams();
-    console.log("game statics: " + gameID);
     const opponent = "電機"; // may change to get from backend with gameid
     const [openChangeStatistics, setOpenChangeStatistics] = useState(false);
     const [selectedNum, setSelectedNum] = useState("");
@@ -79,14 +78,6 @@ const GameStatisticsComponent = () => {
     const [playersDisplayObject, setPlayersDisplayObject] = useState(
         createPlayersDisplayObject(playersObject)
     );
-    // const {
-    //     players,
-    //     setPlayers,
-    //     playersObject,
-    //     setPlayersObject,
-    //     playersDisplayObject,
-    //     setPlayersDisplayObject,
-    // } = props;
 
     const changePlayersObject = (playerNum, event, add) => {
         console.log(playerNum, event, add);

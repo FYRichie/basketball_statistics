@@ -23,7 +23,6 @@ import {
 
 const AddPlayer = (props) => {
     const { gameID } = useParams();
-    console.log("add players gameid: ", gameID);
     const {
         players,
         setPlayers,
@@ -58,7 +57,6 @@ const AddPlayer = (props) => {
                 playerNum,
                 playerName
             );
-            // const playerID = Math.random();
 
             const newPlayers = [
                 ...players,
@@ -81,8 +79,9 @@ const AddPlayer = (props) => {
         setAlertText("");
     };
     const handleDeletePlayer = async (ID) => {
+        const deletePlayer = players.find((p) => p.ID === ID);
         setPlayers(players.filter((p) => p.ID !== ID));
-        // await deletePersonalStat(ID);
+        await deletePersonalStat(deletePlayer.ID);
         const _po = playersObject.filter((p) => p.ID !== ID);
         setPlayersObject(_po);
         setPlayersDisplayObject(createPlayersDisplayObject(_po));

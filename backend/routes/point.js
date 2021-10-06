@@ -9,6 +9,7 @@ exports.createPoint = async (req, res) => {
             console.log("create point err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(point);
             res.status(200).send({ message: "success", id: point._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findPoint = async (req, res) => {
 
 exports.deletePoint = async (req, res) => {
     let constrain = req.body;
-    await Point.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Point.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updatePoint = async (req, res) => {

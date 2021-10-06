@@ -9,6 +9,7 @@ exports.createBlock = async (req, res) => {
             console.log("create block err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(block);
             res.status(200).send({ message: "success", id: block._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findBlock = async (req, res) => {
 
 exports.deleteBlock = async (req, res) => {
     let constrain = req.body;
-    await Block.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Block.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updateBlock = async (req, res) => {

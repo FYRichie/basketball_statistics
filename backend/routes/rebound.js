@@ -9,6 +9,7 @@ exports.createRebound = async (req, res) => {
             console.log("create rebound err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(rebound);
             res.status(200).send({ message: "success", id: rebound._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findRebound = async (req, res) => {
 
 exports.deleteRebound = async (req, res) => {
     let constrain = req.body;
-    await Rebound.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Rebound.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updateRebound = async (req, res) => {

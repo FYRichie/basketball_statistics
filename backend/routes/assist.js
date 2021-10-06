@@ -9,6 +9,7 @@ exports.createAssist = async (req, res) => {
             console.log("create assist err");
             res.status(403).send({ message: "error" });
         } else {
+            console.log(assist);
             res.status(200).send({ message: "success", id: assist._id });
         }
     });
@@ -22,13 +23,12 @@ exports.findAssist = async (req, res) => {
 
 exports.deleteAssist = async (req, res) => {
     let constrain = req.body;
-    await Assist.deleteOne(constrain, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Assist.deleteOne(constrain).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.updateAssist = async (req, res) => {

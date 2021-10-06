@@ -4,13 +4,13 @@ const Game = require("../models/game");
 
 exports.createGame = async (req, res) => {
     let data = req.body.game;
-    console.log(data);
+    // console.log(data);
     Game.create(data, (err, game) => {
         if (err) {
             console.log("create game err");
             res.status(403).send({ message: "error" });
         } else {
-            console.log(game._id);
+            console.log(game);
             res.status(200).send({ message: "success", id: game._id });
         }
     });
@@ -32,13 +32,12 @@ exports.findGameById = async (req, res) => {
 exports.deleteGame = async (req, res) => {
     let date = req.body.date;
     let opponent = req.body.opponent;
-    await Game.deleteOne({ date: date, opponent: opponent }, function (err) {
-        if (err) {
-            res.status(200).send({ message: "error" });
-        } else {
-            res.status(200).send({ message: "success" });
-        }
-    });
+    try {
+        await Game.deleteOne({ date: date, opponent: opponent }).exec();
+        res.status(200).send({ message: "success" });
+    } catch (e) {
+        res.status(200).send({ message: "error" });
+    }
 };
 
 exports.deleteGameById = async (req, res) => {
