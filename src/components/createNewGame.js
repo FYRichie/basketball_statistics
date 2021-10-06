@@ -13,8 +13,11 @@ function CreateNewGame(props) {
     };
     const handleCreate = async () => {
         // call axios.js
-        setGameID(createGame(new Date(), opponent));
-        history.push(`/game/${gameID}/addplayer`);
+        let id = await createGame(new Date(), opponent);
+        console.log(id);
+        await setGameID(id);
+        // console.log(gameID);
+        history.push(`/game/${id}/addplayer`);
     };
 
     return (
