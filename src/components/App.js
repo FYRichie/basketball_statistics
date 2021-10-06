@@ -4,7 +4,7 @@ import CountStatistics from "./CountStatistics";
 function App() {
     return (
         <div>
-            {/* <AddPlayer /> */}
+            <AddPlayer />
             <CountStatistics />
         </div>
     );
