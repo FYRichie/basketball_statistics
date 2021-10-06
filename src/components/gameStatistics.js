@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Paper,
     Table,
@@ -20,108 +20,30 @@ import {
     MenuItem,
     Select,
 } from "@material-ui/core";
-import { BrowserRouter, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import {
+    createPoint,
+    createAssist,
+    createBlock,
+    createRebound,
+    createSteal,
+    createTurnover,
+    deletePoint,
+    deleteAssist,
+    deleteBlock,
+    deleteRebound,
+    deleteSteal,
+    deleteTurnover,
+} from "../api";
+import {
+    columns,
+    createPlayersObject,
+    createPlayersDisplayObject,
+    getType,
+    getFoulType,
+} from "./gameStatisticsTool";
+import AddPlayer from "./addPlayer";
 
-const columns = [
-    { id: "number", label: "背號", minWidth: 50 },
-    { id: "name", label: "名字", minWidth: 100 },
-    { id: "playerTotalScore", label: "得分", minWidth: 50 },
-    { id: "freeThrowsMade", label: "罰球(進)", minWidth: 60 },
-    { id: "freeThrowsAttempt", label: "罰球(總)", minWidth: 60 },
-    { id: "twoPointersMade", label: "兩分(進)", minWidth: 60 },
-    { id: "twoPointersAttempt", label: "兩分(總)", minWidth: 60 },
-    { id: "threePointersMade", label: "三分(進)", minWidth: 60 },
-    { id: "threePointersAttempt", label: "三分(總)", minWidth: 60 },
-    { id: "rebound", label: "籃板", minWidth: 50 },
-    { id: "offensiveRebound", label: "進攻籃板", minWidth: 60 },
-    { id: "deffensiveRebound", label: "防守籃板", minWidth: 60 },
-    { id: "assist", label: "助攻", minWidth: 50 },
-    { id: "steal", label: "抄截", minWidth: 50 },
-    { id: "foul", label: "犯規", minWidth: 50 },
-    { id: "block", label: "阻攻", minWidth: 50 },
-    { id: "turnover", label: "失誤", minWidth: 50 },
-    { id: "playerStatus", label: "上下場", minWidth: 50 },
-];
-const createPlayersObject = (players) => {
-    return players.map((p) => {
-        return {
-            num: p.num,
-            name: p.name,
-            score: {
-                freethrow: {
-                    made: 0,
-                    attempt: 0,
-                },
-                twopointer: {
-                    made: 0,
-                    attempt: 0,
-                },
-                threepointer: {
-                    made: 0,
-                    attempt: 0,
-                },
-            },
-            rebound: {
-                offensive: 0,
-                deffensive: 0,
-            },
-            assist: 0,
-            steal: 0,
-            foul: [],
-            block: 0,
-            turnover: 0,
-            oncourt: false,
-        };
-    });
-};
-const createPlayersDisplayObject = (playersObject) => {
-    const pdo = playersObject.map((p) => {
-        const number = p.num;
-        const name = p.name;
-        const playerTotalScore =
-            p.score.freethrow.made +
-            p.score.twopointer.made * 2 +
-            p.score.threepointer.made * 3;
-        const freeThrowsMade = p.score.freethrow.made;
-        const freeThrowsAttempt = p.score.freethrow.attempt;
-        const twoPointersMade = p.score.twopointer.made;
-        const twoPointersAttempt = p.score.twopointer.attempt;
-        const threePointersMade = p.score.threepointer.made;
-        const threePointersAttempt = p.score.threepointer.attempt;
-        const rebound = p.rebound.offensive + p.rebound.deffensive;
-        const offensiveRebound = p.rebound.offensive;
-        const deffensiveRebound = p.rebound.deffensive;
-        const assist = p.assist;
-        const steal = p.steal;
-        const foul = p.foul.length;
-        const block = p.block;
-        const turnover = p.turnover;
-        const playerStatus = p.oncourt ? "上場" : "下場";
-        return {
-            number,
-            name,
-            playerTotalScore,
-            freeThrowsMade,
-            freeThrowsAttempt,
-            twoPointersMade,
-            twoPointersAttempt,
-            threePointersMade,
-            threePointersAttempt,
-            rebound,
-            offensiveRebound,
-            deffensiveRebound,
-            assist,
-            steal,
-            foul,
-            block,
-            turnover,
-            playerStatus,
-        };
-    });
-    return pdo.sort((p1, p2) => {
-        return p1.playerStatus > p2.playerStatus;
-    });
-};
 const StickyTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.common.black,
@@ -139,8 +61,8 @@ const StickyTableCell = withStyles((theme) => ({
     },
 }))(TableCell);
 
-function GameStatisticsComponent() {
-    // const [unfinishedGame, setUnfinishedGame] = useState(false); // may set to true when start new game or db returns there's an unfinished game
+const GameStatisticsComponent = () => {
+    const { gameID } = useParams();
     const opponent = "電機"; // may change to get from backend with gameid
     const [openChangeStatistics, setOpenChangeStatistics] = useState(false);
     const [selectedNum, setSelectedNum] = useState("");
@@ -148,22 +70,8 @@ function GameStatisticsComponent() {
     const [selectedID, setSelectedID] = useState("");
     const [selectedLabel, setSelectedLabel] = useState("");
     const [period, setPeriod] = useState(1);
-
-    const players = [
-        // may pass in by parent componenet
-        { num: "1", name: "一號" },
-        { num: "2", name: "二號" },
-        { num: "3", name: "三號" },
-        { num: "4", name: "四號" },
-        { num: "5", name: "五號" },
-        { num: "6", name: "六號" },
-        { num: "7", name: "七號" },
-        { num: "8", name: "八號" },
-        { num: "9", name: "九號" },
-        { num: "10", name: "十號" },
-        { num: "11", name: "十一號" },
-        { num: "12", name: "十二號" },
-    ];
+    const [openAddPlayer, setOpenAddPlayer] = useState(false);
+    const [players, setPlayers] = useState([]);
     const [playersObject, setPlayersObject] = useState(
         // statistics for players
         createPlayersObject(players)
@@ -173,24 +81,6 @@ function GameStatisticsComponent() {
         createPlayersDisplayObject(playersObject)
     );
 
-    const get_type = () => {
-        return columns.map((c, index) => {
-            if (index < 2)
-                return (
-                    <TableCell
-                        key={c.id}
-                        style={{ top: 57, minWidth: c.minWidth }}
-                    >
-                        {c.label}
-                    </TableCell>
-                );
-            return (
-                <TableCell key={c.id} style={{ top: 57, minWidth: c.minWidth }}>
-                    {c.label}
-                </TableCell>
-            );
-        });
-    };
     const changePlayersObject = (playerNum, event, add) => {
         console.log(playerNum, event, add);
         setPlayersObject(
@@ -198,19 +88,143 @@ function GameStatisticsComponent() {
                 if (p.num !== playerNum) return p;
                 const _p = p;
                 if (event === "playerStatus") _p.oncourt = !p.oncourt;
-                else if (event === "freeThrowsMade")
+                else if (event === "freeThrowsMade") {
                     _p.score.freethrow.made += add;
-                else if (event === "freeThrowsAttempt")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "made"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "made"
+                        );
+                } else if (event === "freeThrowsAttempt") {
                     _p.score.freethrow.attempt += add;
-                else if (event === "twoPointersMade")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "attempt"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "freethrow",
+                            "attempt"
+                        );
+                } else if (event === "twoPointersMade") {
                     _p.score.twopointer.made += add;
-                else if (event === "twoPointersAttempt")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "made"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "made"
+                        );
+                } else if (event === "twoPointersAttempt") {
                     _p.score.twopointer.attempt += add;
-                else if (event === "threePointersMade")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "attempt"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "twopointer",
+                            "attempt"
+                        );
+                } else if (event === "threePointersMade") {
                     _p.score.threepointer.made += add;
-                else if (event === "threePointersAttempt")
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "made"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "made"
+                        );
+                } else if (event === "threePointersAttempt") {
                     _p.score.threepointer.attempt += add;
-                else _p[event] = p[event] + add;
+                    if (add === 1)
+                        createPoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "attempt"
+                        );
+                    else
+                        deletePoint(
+                            gameID,
+                            playerNum,
+                            period,
+                            "threepointer",
+                            "attempt"
+                        );
+                } else if (event === "offensiveRebound") {
+                    _p.rebound.offensive += add;
+                    if (add === 1)
+                        createRebound(gameID, playerNum, period, "offensive");
+                    else deleteRebound(gameID, playerNum, period, "offensive");
+                } else if (event === "deffensiveRebound") {
+                    _p.rebound.deffensive += add;
+                    if (add === 1)
+                        createRebound(gameID, playerNum, period, "deffensive");
+                    else deleteRebound(gameID, playerNum, period, "deffensive");
+                } else if (event === "assist") {
+                    _p.assist += add;
+                    if (add === 1) createAssist(gameID, playerNum, period);
+                    else deleteAssist(gameID, playerNum, period);
+                } else if (event === "steal") {
+                    _p.steal += add;
+                    if (add === 1) createSteal(gameID, playerNum, period);
+                    else deleteSteal(gameID, playerNum, period);
+                } else if (event === "foul") {
+                    _p.foul.push(add); // foul type, count length
+                } else if (event === "block") {
+                    _p.block += add;
+                    if (add === 1) createBlock(gameID, playerNum, period);
+                    else deleteBlock(gameID, playerNum, period);
+                } else if (event === "turnover") {
+                    _p.turnover += add;
+                    if (add === 1) createTurnover(gameID, playerNum, period);
+                    else deleteTurnover(gameID, playerNum, period);
+                }
                 return _p;
             })
         );
@@ -218,7 +232,7 @@ function GameStatisticsComponent() {
     };
     const handleClickCell = (e) => {
         const [num, name, id, label] = e.target.id.split("-");
-        // console.log(e.target.id);
+        console.log(e.target.id);
         if (id === "playerTotalScore" || id === "rebound") return;
         else if (id === "playerStatus") {
             changePlayersObject(num, id, 0);
@@ -242,6 +256,12 @@ function GameStatisticsComponent() {
         changePlayersObject(playerNum, event, add);
         // send data including period to backend
         handleCloseChange();
+    };
+    const handleAddPlayer = () => {
+        setOpenAddPlayer(true);
+    };
+    const handleCloseAddPlayer = () => {
+        setOpenAddPlayer(false);
     };
 
     return (
@@ -273,6 +293,7 @@ function GameStatisticsComponent() {
                                 </Select>
                             </FormControl>
                         </Box>
+                        <Button onClick={handleAddPlayer}>更改球員</Button>
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -297,7 +318,7 @@ function GameStatisticsComponent() {
                                 其他
                             </TableCell>
                         </TableRow>
-                        <TableRow>{get_type()}</TableRow>
+                        <TableRow>{getType()}</TableRow>
                     </TableHead>
                     <TableBody>
                         {playersDisplayObject.map((p) => {
@@ -318,15 +339,7 @@ function GameStatisticsComponent() {
                                                         onClick={
                                                             handleClickCell
                                                         }
-                                                        id={
-                                                            p.number +
-                                                            "-" +
-                                                            p.name +
-                                                            "-" +
-                                                            c.id +
-                                                            "-" +
-                                                            c.label
-                                                        }
+                                                        id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                                     >
                                                         {value}
                                                     </TableCell>
@@ -336,15 +349,7 @@ function GameStatisticsComponent() {
                                             <TableCell
                                                 key={c.id}
                                                 onClick={handleClickCell}
-                                                id={
-                                                    p.number +
-                                                    "-" +
-                                                    p.name +
-                                                    "-" +
-                                                    c.id +
-                                                    "-" +
-                                                    c.label
-                                                }
+                                                id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                             >
                                                 {value}
                                             </TableCell>
@@ -359,41 +364,46 @@ function GameStatisticsComponent() {
             <Dialog
                 open={openChangeStatistics}
                 onClose={handleCloseChange}
-                aria-labelledby={selectedNum + "-" + selectedID + "-title"}
+                aria-labelledby={`${selectedNum}-${selectedID}-title`}
             >
-                <DialogTitle id={selectedNum + "-" + selectedID + "-title"}>
-                    {"更改 " + selectedName + " 的 " + selectedLabel}
+                <DialogTitle id={`${selectedNum}-${selectedID}-title`}>
+                    {`更改 ${selectedName} 的 ${selectedLabel}`}
                 </DialogTitle>
-                <DialogActions>
-                    <Button
-                        onClick={() => {
-                            handleChange(selectedNum, selectedID, -1);
-                        }}
-                    >
-                        -1
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            handleChange(selectedNum, selectedID, 1);
-                        }}
-                        autoFocus
-                    >
-                        +1
-                    </Button>
-                </DialogActions>
+                {selectedID !== "foul" ? (
+                    <DialogActions>
+                        <Button
+                            onClick={() => {
+                                handleChange(selectedNum, selectedID, -1);
+                            }}
+                        >
+                            -1
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                handleChange(selectedNum, selectedID, 1);
+                            }}
+                            autoFocus
+                        >
+                            +1
+                        </Button>
+                    </DialogActions>
+                ) : (
+                    <DialogActions>
+                        {getFoulType(handleChange, selectedNum, selectedID)}
+                    </DialogActions>
+                )}
+            </Dialog>
+            <Dialog open={openAddPlayer} onClose={handleCloseAddPlayer}>
+                <AddPlayer
+                    players={players}
+                    setPlayers={setPlayers}
+                    playersObject={playersObject}
+                    setPlayersObject={setPlayersObject}
+                    setPlayersDisplayObject={setPlayersDisplayObject}
+                />
             </Dialog>
         </Paper>
     );
-}
+};
 
-export default function GameStatistics(props) {
-    return (
-        <BrowserRouter>
-            <Route
-                exact
-                path={"/Game/" + props.gameID}
-                component={GameStatisticsComponent}
-            />
-        </BrowserRouter>
-    );
-}
+export default GameStatisticsComponent;
