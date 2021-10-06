@@ -204,7 +204,7 @@ const GameStatisticsComponent = () => {
                 </AppBar>
             </Box>
             <Paper style={{ width: "100%" }}>
-                <TableContainer style={{ maxHeight: "440px" }}>
+                <TableContainer style={{ maxHeight: "540px" }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -295,6 +295,11 @@ const GameStatisticsComponent = () => {
                     setPlayersObject={setPlayersObject}
                     setPlayersDisplayObject={setPlayersDisplayObject}
                 />
+                <DialogActions>
+                    <Button style={{ margin: "10px" }} variant="outlined" onClick={() => setOpenAddPlayer(false)}>
+                        完成
+                    </Button>
+                </DialogActions>
             </Dialog>
         </Container>
     );
