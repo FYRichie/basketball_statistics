@@ -1,4 +1,6 @@
+import { ThemeProvider } from "@material-ui/core";
 import React, { useState } from "react";
+import theme from "../theme";
 import GameStatistics from "./gameStatistics";
 import HistoryAndCreate from "./historyAndCreate";
 import Starting from "./starting";
@@ -9,14 +11,11 @@ function App() {
     // const [HistoryAndCreateReact, gameID] = historyAndCreate();
     return (
         <React.StrictMode>
-            <Starting />
-            <HistoryAndCreate
-                setGameID={setGameID}
-                gameID={gameID}
-                setOpponent={setOpponent}
-                opponent={opponent}
-            />
-            <GameStatistics gameID={gameID} />
+            <ThemeProvider theme={theme}>
+                <Starting />
+                <HistoryAndCreate setGameID={setGameID} gameID={gameID} setOpponent={setOpponent} opponent={opponent} />
+                <GameStatistics gameID={gameID} />
+            </ThemeProvider>
         </React.StrictMode>
     );
 }
