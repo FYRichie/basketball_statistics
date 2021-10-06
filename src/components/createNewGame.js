@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { createGame } from "../api";
+import { useHistory } from "react-router-dom";
 
 function CreateNewGame(props) {
     const { setGameID, gameID } = props;
     const [opponent, setOpponent] = useState("");
+    const history = useHistory();
 
     const handleChangeOpponent = (e) => {
         setOpponent(e.target.value);
@@ -12,7 +14,7 @@ function CreateNewGame(props) {
     const handleCreate = async () => {
         // call axios.js
         setGameID(createGame(new Date(), opponent));
-        window.location.replace(window.location.origin + "/Game/" + gameID);
+        history.push(`/game/${gameID}/addplayer`);
     };
 
     return (

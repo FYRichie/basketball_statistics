@@ -1,10 +1,11 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 
-const startComponent = () => {
+const Starting = () => {
+    const history = useHistory();
     const goToHistoryAndCreate = () => {
-        window.location.replace(window.location.origin + "/HistoryOrCreate");
+        history.push("/historyorcreate");
     };
     return (
         <>
@@ -15,10 +16,4 @@ const startComponent = () => {
     );
 };
 
-export default function Starting() {
-    return (
-        <BrowserRouter>
-            <Route exact path="/" component={startComponent} />
-        </BrowserRouter>
-    );
-}
+export default Starting;
