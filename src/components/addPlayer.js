@@ -23,6 +23,7 @@ import {
 
 const AddPlayer = (props) => {
     const { gameID } = useParams();
+    console.log("add players gameid: ", gameID);
     const {
         players,
         setPlayers,
@@ -52,12 +53,13 @@ const AddPlayer = (props) => {
             setAlertText("");
             setPlayerNum("");
             setPlayerName("");
-            // const playerID = await createPersonalStat(
-            //     gameID,
-            //     playerNum,
-            //     playerName
-            // );
-            const playerID = Math.random();
+            const playerID = await createPersonalStat(
+                gameID,
+                playerNum,
+                playerName
+            );
+            // const playerID = Math.random();
+
             const newPlayers = [
                 ...players,
                 { ID: playerID, num: playerNum, name: playerName },
