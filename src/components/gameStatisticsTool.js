@@ -1,5 +1,16 @@
-import { TableCell, Button } from "@material-ui/core";
-
+import { TableCell, Button, withStyles } from "@material-ui/core";
+const StickyTableCell = withStyles((theme) => ({
+    head: {
+        left: 0,
+        position: "sticky",
+        zIndex: theme.zIndex.appBar + 2,
+    },
+    body: {
+        left: 0,
+        position: "sticky",
+        zIndex: theme.zIndex.appBar + 1,
+    },
+}))(TableCell);
 export const columns = [
     { id: "number", label: "背號", minWidth: 50 },
     { id: "name", label: "名字", minWidth: 100 },
@@ -59,10 +70,7 @@ export const createPlayersDisplayObject = (playersObject) => {
     const pdo = playersObject.map((p) => {
         const number = p.num;
         const name = p.name;
-        const playerTotalScore =
-            p.score.freethrow.made +
-            p.score.twopointer.made * 2 +
-            p.score.threepointer.made * 3;
+        const playerTotalScore = p.score.freethrow.made + p.score.twopointer.made * 2 + p.score.threepointer.made * 3;
         const freeThrowsMade = p.score.freethrow.made;
         const freeThrowsAttempt = p.score.freethrow.attempt;
         const twoPointersMade = p.score.twopointer.made;
@@ -105,11 +113,11 @@ export const createPlayersDisplayObject = (playersObject) => {
 };
 export const getType = () => {
     return columns.map((c, index) => {
-        if (index < 2)
+        if (index < 1)
             return (
-                <TableCell key={c.id} style={{ top: 57, minWidth: c.minWidth }}>
+                <StickyTableCell key={c.id} style={{ top: 57, minWidth: c.minWidth }}>
                     {c.label}
-                </TableCell>
+                </StickyTableCell>
             );
         return (
             <TableCell key={c.id} style={{ top: 57, minWidth: c.minWidth }}>
