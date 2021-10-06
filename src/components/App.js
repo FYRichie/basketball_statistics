@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import theme from "../theme";
 import GameStatistics from "./gameStatistics";
 import HistoryAndCreate from "./historyAndCreate";
 import Starting from "./starting";
