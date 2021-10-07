@@ -49,61 +49,59 @@ export const createPlayersObject = (
     newNum = 0,
     playersOjbect = []
 ) => {
-    return players.map((p, index) => {
+    return players.map(async (p, index) => {
         if (index >= newNum) {
-            const freeThrowMade = findPoint({
+            const freeThrowMade = await findPoint({
                 gameId: gameID,
                 playerId: p.ID,
                 pointType: "freethrow",
                 made: "made",
             });
-            const freeThrowsAttempt = findPoint({
+            const freeThrowsAttempt = await findPoint({
                 gameId: gameID,
                 playerId: p.ID,
                 pointType: "freethrow",
                 made: "attempt",
             });
-            console.log(freeThrowsAttempt);
-            const twoPointersMade = findPoint({
+            const twoPointersMade = await findPoint({
                 gameId: gameID,
                 playerId: p.ID,
                 pointType: "twopointer",
                 made: "made",
             });
-            const twoPointersAttempt = findPoint({
+            const twoPointersAttempt = await findPoint({
                 gameId: gameID,
                 playerId: p.ID,
                 pointType: "twopointer",
                 made: "attempt",
             });
-            const threePointersMade = findPoint({
+            const threePointersMade = await findPoint({
                 gameId: gameID,
                 playerId: p.ID,
                 pointType: "threepointer",
                 made: "made",
             });
-            const threePointersAttempt = findPoint({
+            const threePointersAttempt = await findPoint({
                 gameId: gameID,
                 playerId: p.ID,
                 pointType: "threepointer",
                 made: "attempt",
             });
-            const offensiveRebound = findRebound({
+            const offensiveRebound = await findRebound({
                 gameId: gameID,
                 playerId: p.ID,
                 reboundType: "offensive",
             });
-            const deffensiveRebound = findRebound({
+            const deffensiveRebound = await findRebound({
                 gameId: gameID,
                 playerId: p.ID,
                 reboundType: "deffensive",
             });
-            const assist = findAssist({ gameId: gameID, playerId: p.ID });
-            const steal = findSteal({ gameId: gameID, playerId: p.ID });
-            const foul = findFoul({ gameId: gameID, playerId: p.ID });
-            console.log(foul);
-            const block = findBlock({ gameId: gameID, playerId: p.ID });
-            const turnover = findTurnover({
+            const assist = await findAssist({ gameId: gameID, playerId: p.ID });
+            const steal = await findSteal({ gameId: gameID, playerId: p.ID });
+            const foul = await findFoul({ gameId: gameID, playerId: p.ID });
+            const block = await findBlock({ gameId: gameID, playerId: p.ID });
+            const turnover = await findTurnover({
                 gameId: gameID,
                 playerId: p.ID,
             });
@@ -262,7 +260,7 @@ export const initState = async (
         };
     });
     setPlayers(players);
-    const po = createPlayersObject(players, gameID);
+    const po = await createPlayersObject(players, gameID);
     console.log(po);
     setPlayersObject(po);
     setPlayersDisplayObject(createPlayersDisplayObject(po));

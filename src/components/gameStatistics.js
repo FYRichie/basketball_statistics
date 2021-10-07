@@ -276,7 +276,13 @@ const GameStatisticsComponent = () => {
         }
     };
     useEffect(() => {
-        initState(gameID, setOpponent, setPlayers, setPlayersObject);
+        initState(
+            gameID,
+            setOpponent,
+            setPlayers,
+            setPlayersObject,
+            setPlayersDisplayObject
+        );
     }, []);
 
     return (
