@@ -2,7 +2,7 @@ import { Route } from "react-router-dom";
 import React from "react";
 import HistoryGames from "./historyGames";
 import CreateNewGame from "./createNewGame";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 
 const HistoryAndCreate = (props) => {
     const { gameID, setGameID } = props;
@@ -13,10 +13,12 @@ const HistoryAndCreate = (props) => {
                 container
                 spacing={0}
                 direction="column"
-                alignItems="center"
                 justifyContent="center"
-                style={{ minHeight: "100vh", flexWrap: "nowrap" }}
+                style={{ alignItems: "center", minHeight: "100vh", flexWrap: "nowrap" }}
             >
+                <Typography variant="h2" style={{ margin: "20px" }}>
+                    Game Records
+                </Typography>
                 <HistoryGames />
                 <CreateNewGame gameID={gameID} setGameID={setGameID} />
             </Grid>

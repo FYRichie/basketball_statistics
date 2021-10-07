@@ -1,19 +1,13 @@
 import React, { useState } from "react";
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField,
-} from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { createGame } from "../api";
 import { useHistory } from "react-router-dom";
+import { Box } from "@mui/system";
 
 function CreateNewGame(props) {
     const { setGameID, gameID } = props;
     const [opponent, setOpponent] = useState("");
-    const [createOpened, setCreateOpened] = useState(true);
+    const [createOpened, setCreateOpened] = useState(false);
     const history = useHistory();
 
     const handleChangeOpponent = (e) => {
@@ -28,29 +22,38 @@ function CreateNewGame(props) {
         history.push(`/game/${id}`);
     };
     return (
-        <Dialog maxWidth="md" open={createOpened}>
-            <DialogTitle>新增比賽</DialogTitle>
-            <DialogContent>
-                <TextField
-                    variant="outlined"
-                    defaultValue={opponent}
-                    value={opponent}
-                    label="對手名稱"
-                    required={opponent === ""}
-                    onChange={handleChangeOpponent}
-                    helperText="請輸入對手"
-                />
-            </DialogContent>
-            <DialogActions>
+        <>
+            <Box>
                 <Button
-                    onClick={handleCreate}
+                    onClick={() => {
+                        setCreateOpened(true);
+                    }}
                     variant="outlined"
-                    style={{ margin: "10px" }}
+                    style={{ margin: "20px" }}
                 >
-                    Create
+                    Create New Game
                 </Button>
-            </DialogActions>
-        </Dialog>
+            </Box>
+            <Dialog maxWidth="md" open={createOpened} onClose={() => setCreateOpened(false)}>
+                <DialogTitle>新增比賽</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        variant="outlined"
+                        defaultValue={opponent}
+                        value={opponent}
+                        label="對手名稱"
+                        required={opponent === ""}
+                        onChange={handleChangeOpponent}
+                        helperText="請輸入對手"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCreate} variant="outlined" style={{ margin: "10px" }}>
+                        Create
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
     );
 }
 
