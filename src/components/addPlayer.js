@@ -72,6 +72,7 @@ const AddPlayer = (props) => {
             setPlayers(newPlayers);
             const _playersObject = createPlayersObject(
                 newPlayers,
+                gameID,
                 newPlayers.length - 1,
                 playersObject
             );

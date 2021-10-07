@@ -75,10 +75,12 @@ const GameStatisticsComponent = () => {
     const [openAddPlayer, setOpenAddPlayer] = useState(false);
     const [players, setPlayers] = useState([]);
     const [playersObject, setPlayersObject] = useState(
-        createPlayersObject(players, setPlayers)
+        // createPlayersObject(players, gameID)
+        []
     );
     const [playersDisplayObject, setPlayersDisplayObject] = useState(
-        createPlayersDisplayObject(playersObject)
+        // createPlayersDisplayObject(playersObject)
+        []
     );
     const [clickTime, setClickTime] = useState(null);
 
@@ -274,7 +276,7 @@ const GameStatisticsComponent = () => {
         }
     };
     useEffect(() => {
-        initState(gameID, setOpponent);
+        initState(gameID, setOpponent, setPlayers, setPlayersObject);
     }, []);
 
     return (
