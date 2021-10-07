@@ -49,95 +49,108 @@ export const createPlayersObject = (
     newNum = 0,
     playersOjbect = []
 ) => {
-    return players.map((p, index) => {
-        if (index >= newNum) {
-            const freeThrowMade = findPoint({
-                gameId: gameID,
-                playerId: p.ID,
-                pointType: "freethrow",
-                made: "made",
-            });
-            const freeThrowsAttempt = findPoint({
-                gameId: gameID,
-                playerId: p.ID,
-                pointType: "freethrow",
-                made: "attempt",
-            });
-            console.log(freeThrowsAttempt);
-            const twoPointersMade = findPoint({
-                gameId: gameID,
-                playerId: p.ID,
-                pointType: "twopointer",
-                made: "made",
-            });
-            const twoPointersAttempt = findPoint({
-                gameId: gameID,
-                playerId: p.ID,
-                pointType: "twopointer",
-                made: "attempt",
-            });
-            const threePointersMade = findPoint({
-                gameId: gameID,
-                playerId: p.ID,
-                pointType: "threepointer",
-                made: "made",
-            });
-            const threePointersAttempt = findPoint({
-                gameId: gameID,
-                playerId: p.ID,
-                pointType: "threepointer",
-                made: "attempt",
-            });
-            const offensiveRebound = findRebound({
-                gameId: gameID,
-                playerId: p.ID,
-                reboundType: "offensive",
-            });
-            const deffensiveRebound = findRebound({
-                gameId: gameID,
-                playerId: p.ID,
-                reboundType: "deffensive",
-            });
-            const assist = findAssist({ gameId: gameID, playerId: p.ID });
-            const steal = findSteal({ gameId: gameID, playerId: p.ID });
-            const foul = findFoul({ gameId: gameID, playerId: p.ID });
-            console.log(foul);
-            const block = findBlock({ gameId: gameID, playerId: p.ID });
-            const turnover = findTurnover({
-                gameId: gameID,
-                playerId: p.ID,
-            });
-            return {
-                ID: p.ID,
-                num: p.num,
-                name: p.name,
-                score: {
-                    freethrow: {
-                        made: freeThrowMade.length,
-                        attempt: freeThrowsAttempt.length,
+    return Promise.all(
+        players.map(async (p, index) => {
+            if (index >= newNum) {
+                const freeThrowMade = await findPoint({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    pointType: "freethrow",
+                    made: "made",
+                });
+                const freeThrowsAttempt = await findPoint({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    pointType: "freethrow",
+                    made: "attempt",
+                });
+                console.log("freethrowattempt: ", freeThrowsAttempt);
+                const twoPointersMade = await findPoint({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    pointType: "twopointer",
+                    made: "made",
+                });
+                const twoPointersAttempt = await findPoint({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    pointType: "twopointer",
+                    made: "attempt",
+                });
+                const threePointersMade = await findPoint({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    pointType: "threepointer",
+                    made: "made",
+                });
+                const threePointersAttempt = await findPoint({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    pointType: "threepointer",
+                    made: "attempt",
+                });
+                const offensiveRebound = await findRebound({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    reboundType: "offensive",
+                });
+                const deffensiveRebound = await findRebound({
+                    gameId: gameID,
+                    playerId: p.ID,
+                    reboundType: "deffensive",
+                });
+                const assist = await findAssist({
+                    gameId: gameID,
+                    playerId: p.ID,
+                });
+                const steal = await findSteal({
+                    gameId: gameID,
+                    playerId: p.ID,
+                });
+                const foul = await findFoul({ gameId: gameID, playerId: p.ID });
+                console.log("foul: ", foul);
+                const block = await findBlock({
+                    gameId: gameID,
+                    playerId: p.ID,
+                });
+                console.log("block: ", block);
+                const turnover = await findTurnover({
+                    gameId: gameID,
+                    playerId: p.ID,
+                });
+                console.log("turnover: ", turnover);
+                return {
+                    ID: p.ID,
+                    num: p.num,
+                    name: p.name,
+                    score: {
+                        freethrow: {
+                            made: freeThrowMade.length,
+                            attempt: freeThrowsAttempt.length,
+                        },
+                        twopointer: {
+                            made: twoPointersMade.length,
+                            attempt: twoPointersAttempt.length,
+                        },
+                        threepointer: {
+                            made: threePointersMade.length,
+                            attempt: threePointersAttempt.length,
+                        },
                     },
-                    twopointer: {
-                        made: twoPointersMade.length,
-                        attempt: twoPointersAttempt.length,
+                    rebound: {
+                        offensive: offensiveRebound.length,
+                        deffensive: deffensiveRebound.length,
                     },
-                    threepointer: {
-                        made: threePointersMade.length,
-                        attempt: threePointersAttempt.length,
-                    },
-                },
-                rebound: {
-                    offensive: offensiveRebound.length,
-                    deffensive: deffensiveRebound.length,
-                },
-                assist: assist.length,
-                steal: steal.length,
-                foul: foul.map((f) => f.foulType),
-                block: block.length,
-                turnover: turnover.length,
-                oncourt: false,
-            };
-        } else return playersOjbect[index];
-    });
+                    assist: assist.length,
+                    steal: steal.length,
+                    foul: foul.map((f) => f.foulType),
+                    block: block.length,
+                    turnover: turnover.length,
+                    oncourt: false,
+                };
+            } else return await playersOjbect[index];
+        })
+    );
 };
 export const createPlayersDisplayObject = (playersObject) => {
     const pdo = playersObject.map((p) => {
@@ -261,9 +274,10 @@ export const initState = async (
             name: p.name,
         };
     });
-    setPlayers(players);
-    const po = createPlayersObject(players, gameID);
-    console.log(po);
+    await setPlayers(players);
+    console.log(players);
+    const po = await createPlayersObject(players, gameID);
+    console.log("269: ", po);
     setPlayersObject(po);
-    setPlayersDisplayObject(createPlayersDisplayObject(po));
+    // setPlayersDisplayObject(createPlayersDisplayObject(po));
 };
