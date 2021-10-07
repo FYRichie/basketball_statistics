@@ -63,7 +63,11 @@ const AddPlayer = (props) => {
 
             const newPlayers = [
                 ...players,
-                { ID: playerID, num: playerNum, name: playerName },
+                {
+                    ID: playerID,
+                    num: playerNum,
+                    name: playerName,
+                },
             ];
             setPlayers(newPlayers);
             const _playersObject = createPlayersObject(

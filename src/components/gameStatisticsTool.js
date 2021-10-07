@@ -1,5 +1,5 @@
 import { TableCell, Button, withStyles } from "@material-ui/core";
-import { findGame, findGameById } from "../api";
+import { findGame, findGameById, findPersonalStat } from "../api";
 const StickyTableCell = withStyles((theme) => ({
     head: {
         left: 0,
@@ -32,9 +32,9 @@ export const columns = [
     { id: "turnover", label: "失誤", minWidth: 50 },
     { id: "playerStatus", label: "上下場", minWidth: 50 },
 ];
-export const createPlayersObject = (players, newPlayer = 0, playersOjbect) => {
+export const createPlayersObject = (players, newNum, playersOjbect = []) => {
     return players.map((p, index) => {
-        if (index >= newPlayer)
+        if (index >= newNum)
             return {
                 ID: p.ID,
                 num: p.num,
@@ -171,6 +171,9 @@ export const getFoulType = (handleChange, selectedNum, seletcedID) => {
     });
 };
 export const initState = async (gameID, setOpponent) => {
-    const data = await findGameById(gameID);
-    console.log(data);
+    const [game] = await findGameById(gameID);
+    // console.log(data);
+    setOpponent(game.opponent);
+    const players = await findPersonalStat({ _id: gameID });
+    console.log(players);
 };
