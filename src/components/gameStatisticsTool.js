@@ -1,5 +1,5 @@
 import { TableCell, Button, withStyles } from "@material-ui/core";
-import { findGame } from "../api";
+import { findGame, findGameById } from "../api";
 const StickyTableCell = withStyles((theme) => ({
     head: {
         left: 0,
@@ -171,8 +171,6 @@ export const getFoulType = (handleChange, selectedNum, seletcedID) => {
     });
 };
 export const initState = async (gameID, setOpponent) => {
-    const data = await findGame({
-        _id: gameID,
-    });
+    const data = await findGameById(gameID);
     console.log(data);
 };

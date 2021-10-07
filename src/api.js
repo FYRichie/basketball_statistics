@@ -315,7 +315,7 @@ const deleteTurnover = async (gameId, personId, quarter) => {
 
 export {
     createGame,
-    findGame,
+    findGameById,
     deleteGame,
     updateGame,
     createPersonalStat,
