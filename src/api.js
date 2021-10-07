@@ -20,10 +20,19 @@ const createGame = async (date, opponent) => {
     return id;
 };
 
+const findGame = async (constrain) => {
+    const {
+        data: { data },
+    } = await instance.post("/findGame", { constrain: constrain });
+    console.log(data);
+    return data;
+};
+
 const findGameById = async (id) => {
     const {
         data: { data },
     } = await instance.post("/findGameById", { id: id });
+    console.log(data);
     return data;
 };
 
