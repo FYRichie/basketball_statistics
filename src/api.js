@@ -50,11 +50,11 @@ const updateGame = async (id, myGame) => {
     return message;
 };
 
-const createPersonalStat = async (gameId, number, name) => {
+const createPlayerStat = async (gameId, number, name) => {
     const {
         data: { id },
-    } = await instance.post("/createPersonalStat", {
-        personalStat: {
+    } = await instance.post("/createPlayerStat", {
+        playerStat: {
             gameId: gameId,
             number: number,
             name: name,
@@ -63,37 +63,37 @@ const createPersonalStat = async (gameId, number, name) => {
     return id;
 };
 
-const findPersonalStat = async (constrain) => {
+const findPlayerStat = async (constrain) => {
     const {
         data: { data },
-    } = await instance.post("/findPersonalStat", { constrain: constrain });
+    } = await instance.post("/findPlayerStat", { constrain: constrain });
     return data;
 };
 
-const deletePersonalStat = async (id) => {
+const deletePlayerStat = async (id) => {
     const {
         data: { message },
-    } = await instance.post("/deletePersonalStat", { id: id });
+    } = await instance.post("/deletePlayerStat", { id: id });
     return message;
 };
 
-const updatePersonalStat = async (id, myPersonalStat) => {
+const updatePlayerStat = async (id, myPlayerStat) => {
     const {
         data: { message },
-    } = await instance.post("/updatePersonalStat", {
+    } = await instance.post("/updatePlayerStat", {
         id: id,
-        game: myPersonalStat,
+        game: myPlayerStat,
     });
     return message;
 };
 
-const createAssist = async (gameId, personId, quarter) => {
+const createAssist = async (gameId, playerId, quarter) => {
     const {
         data: { id },
     } = await instance.post("/createAssist", {
         assist: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
         },
     });
@@ -108,25 +108,25 @@ const findAssist = async (constrain) => {
     return data;
 };
 
-const deleteAssist = async (gameId, personId, quarter) => {
+const deleteAssist = async (gameId, playerId, quarter) => {
     const {
         data: { message },
     } = await instance.post("/deleteAssist", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter,
         quarter,
     });
     return message;
 };
 
-const createBlock = async (gameId, personId, quarter) => {
+const createBlock = async (gameId, playerId, quarter) => {
     const {
         data: { id },
     } = await instance.post("/createBlock", {
         block: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
         },
     });
@@ -141,24 +141,24 @@ const findBlock = async (constrain) => {
     return data;
 };
 
-const deleteBlock = async (gameId, personId, quarter) => {
+const deleteBlock = async (gameId, playerId, quarter) => {
     const {
         data: { message },
     } = await instance.post("/deleteBlock", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter: quarter,
     });
     return message;
 };
 
-const createFoul = async (gameId, personId, quarter, foulType) => {
+const createFoul = async (gameId, playerId, quarter, foulType) => {
     const {
         data: { id },
     } = await instance.post("/createFoul", {
         foul: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
             foulType: foulType,
         },
@@ -174,25 +174,25 @@ const findFoul = async (constrain) => {
     return data;
 };
 
-const deleteFoul = async (gameId, personId, quarter, foulType) => {
+const deleteFoul = async (gameId, playerId, quarter, foulType) => {
     const {
         data: { message },
     } = await instance.post("/deleteFoul", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter: quarter,
         foulType: foulType,
     });
     return message;
 };
 
-const createPoint = async (gameId, personId, quarter, pointType, made) => {
+const createPoint = async (gameId, playerId, quarter, pointType, made) => {
     const {
         data: { id },
     } = await instance.post("/createPoint", {
         point: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
             pointType: pointType,
             made: made,
@@ -209,12 +209,12 @@ const findPoint = async (constrain) => {
     return data;
 };
 
-const deletePoint = async (gameId, personId, quarter, pointType, made) => {
+const deletePoint = async (gameId, playerId, quarter, pointType, made) => {
     const {
         data: { message },
     } = await instance.post("/deletePoint", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter: quarter,
         pointType: pointType,
         made: made,
@@ -222,13 +222,13 @@ const deletePoint = async (gameId, personId, quarter, pointType, made) => {
     return message;
 };
 
-const createRebound = async (gameId, personId, quarter, reboundType) => {
+const createRebound = async (gameId, playerId, quarter, reboundType) => {
     const {
         data: { id },
     } = await instance.post("/createRebound", {
         rebound: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
             reboundType: reboundType,
             // 'offensive', 'defensive'
@@ -245,12 +245,12 @@ const findRebound = async (constrain) => {
     return data;
 };
 
-const deleteRebound = async (gameId, personId, quarter, reboundType) => {
+const deleteRebound = async (gameId, playerId, quarter, reboundType) => {
     const {
         data: { message },
     } = await instance.post("/deleteRebound", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter: quarter,
         reboundType: reboundType,
         // 'offensive', 'defensive'
@@ -258,13 +258,13 @@ const deleteRebound = async (gameId, personId, quarter, reboundType) => {
     return message;
 };
 
-const createSteal = async (gameId, personId, quarter) => {
+const createSteal = async (gameId, playerId, quarter) => {
     const {
         data: { id },
     } = await instance.post("/createSteal", {
         steal: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
         },
     });
@@ -279,24 +279,24 @@ const findSteal = async (constrain) => {
     return data;
 };
 
-const deleteSteal = async (gameId, personId, quarter) => {
+const deleteSteal = async (gameId, playerId, quarter) => {
     const {
         data: { message },
     } = await instance.post("/deleteSteal", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter: quarter,
     });
     return message;
 };
 
-const createTurnover = async (gameId, personId, quarter) => {
+const createTurnover = async (gameId, playerId, quarter) => {
     const {
         data: { id },
     } = await instance.post("/createTurnover", {
         turnover: {
             gameId: gameId,
-            personId: personId,
+            playerId: playerId,
             quarter: quarter,
         },
     });
@@ -311,12 +311,12 @@ const findTurnover = async (constrain) => {
     return data;
 };
 
-const deleteTurnover = async (gameId, personId, quarter) => {
+const deleteTurnover = async (gameId, playerId, quarter) => {
     const {
         data: { message },
     } = await instance.post("/deleteTurnover", {
         gameId: gameId,
-        personId: personId,
+        playerId: playerId,
         quarter: quarter,
     });
     return message;
@@ -328,10 +328,10 @@ export {
     findGameById,
     deleteGame,
     updateGame,
-    createPersonalStat,
-    findPersonalStat,
-    deletePersonalStat,
-    updatePersonalStat,
+    createPlayerStat,
+    findPlayerStat,
+    deletePlayerStat,
+    updatePlayerStat,
     createAssist,
     findAssist,
     deleteAssist,

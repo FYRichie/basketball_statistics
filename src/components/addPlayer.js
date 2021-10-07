@@ -18,7 +18,7 @@ import {
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Alert, AlertTitle } from "@mui/material";
-import { createPersonalStat, deletePersonalStat } from "../api";
+import { createPlayerStat, deletePlayerStat } from "../api";
 import {
     createPlayersObject,
     createPlayersDisplayObject,
@@ -55,7 +55,7 @@ const AddPlayer = (props) => {
             setAlertText("");
             setPlayerNum("");
             setPlayerName("");
-            const playerID = await createPersonalStat(
+            const playerID = await createPlayerStat(
                 gameID,
                 playerNum,
                 playerName
@@ -63,7 +63,11 @@ const AddPlayer = (props) => {
 
             const newPlayers = [
                 ...players,
-                { ID: playerID, num: playerNum, name: playerName },
+                {
+                    ID: playerID,
+                    num: playerNum,
+                    name: playerName,
+                },
             ];
             setPlayers(newPlayers);
             const _playersObject = createPlayersObject(
@@ -84,7 +88,7 @@ const AddPlayer = (props) => {
     const handleDeletePlayer = async (ID) => {
         const deletePlayer = players.find((p) => p.ID === ID);
         setPlayers(players.filter((p) => p.ID !== ID));
-        await deletePersonalStat(deletePlayer.ID);
+        await deletePlayerStat(deletePlayer.ID);
         const _po = playersObject.filter((p) => p.ID !== ID);
         setPlayersObject(_po);
         setPlayersDisplayObject(createPlayersDisplayObject(_po));
