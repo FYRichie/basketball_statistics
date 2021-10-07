@@ -9,9 +9,9 @@ const PointSchema = new Schema({
         type: String,
         required: [true, "gameId field is required."],
     },
-    personId: {
+    playerId: {
         type: String,
-        required: [true, "personId field is required."],
+        required: [true, "playerId field is required."],
     },
     quarter: {
         type: Number,
