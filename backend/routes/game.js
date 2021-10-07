@@ -25,7 +25,7 @@ exports.findGame = async (req, res) => {
 
 exports.findGameById = async (req, res) => {
     let id = req.body.id;
-    let games = await Game.find({ id: id });
+    let games = await Game.find({ _id: id });
     res.status(200).send({ games: games });
 };
 
