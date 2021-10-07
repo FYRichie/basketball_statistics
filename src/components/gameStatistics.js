@@ -261,7 +261,7 @@ const GameStatisticsComponent = () => {
         let time = new Date();
         // console.log("time mouse up: ", time.getTime());
         if (clickTime !== null) {
-            if (time.getTime() - clickTime > 3000) {
+            if (time.getTime() - clickTime > 1500) {
                 console.log("indirect");
                 setClickTime(null);
                 setOpenChangeStatistics(true);
