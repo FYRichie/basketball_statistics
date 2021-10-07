@@ -31,7 +31,7 @@ exports.findPersonalStatByGame = async (req, res) => {
 exports.findPersonalStat = async (req, res) => {
     let constrain = req.body.constrain;
     let personalStats = await PersonalStat.find(constrain);
-    personalStats.clone();
+    // personalStats.clone();
     res.status(200).send({ data: personalStats });
 };
 
