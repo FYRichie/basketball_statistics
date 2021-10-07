@@ -80,6 +80,7 @@ const GameStatisticsComponent = () => {
     const [playersDisplayObject, setPlayersDisplayObject] = useState(
         createPlayersDisplayObject(playersObject)
     );
+    const [clickTime, setClickTime] = useState(null);
 
     const changePlayersObject = async (playerNum, event, add) => {
         console.log(playerNum, event, add);
@@ -219,7 +220,7 @@ const GameStatisticsComponent = () => {
         );
         setPlayersDisplayObject(createPlayersDisplayObject(playersObject));
     };
-    const handleClickCell = (e) => {
+    const handleMouseDown = (e) => {
         const [num, name, id, label] = e.target.id.split("-");
         console.log(e.target.id);
         if (id === "playerTotalScore" || id === "rebound") return;
@@ -227,11 +228,14 @@ const GameStatisticsComponent = () => {
             changePlayersObject(num, id, 0);
             return;
         }
+        let time = new Date();
+        // console.log("mouse down: ", time.getTime());
+        setClickTime(time.getTime());
         setSelectedNum(num);
         setSelectedName(name);
         setSelectedID(id);
         setSelectedLabel(label);
-        setOpenChangeStatistics(true);
+        // setOpenChangeStatistics(true);
     };
     const handleCloseChange = () => {
         setSelectedNum("");
@@ -252,12 +256,29 @@ const GameStatisticsComponent = () => {
     const handleCloseAddPlayer = () => {
         setOpenAddPlayer(false);
     };
+
+    const handleMouseUp = () => {
+        let time = new Date();
+        // console.log("time mouse up: ", time.getTime());
+        if (clickTime !== null) {
+            if (time.getTime() - clickTime > 5000) {
+                console.log("indirect");
+                setClickTime(null);
+                setOpenChangeStatistics(true);
+            } else {
+                console.log("direct +1");
+                handleChange(selectedNum, selectedID, 1);
+                setClickTime(null);
+                setOpenChangeStatistics(false);
+            }
+        }
+    };
     useEffect(() => {
         initState(gameID, setOpponent);
     }, []);
 
     return (
-        <Container>
+        <Container onMouseUp={handleMouseUp}>
             <Box sx={{ marginTop: 100, width: "inherit" }}>
                 <AppBar position="static">
                     <Toolbar>
@@ -326,8 +347,8 @@ const GameStatisticsComponent = () => {
                                                     <StickyTableCell>
                                                         <TableCell
                                                             key={c.id}
-                                                            onClick={
-                                                                handleClickCell
+                                                            onMouseDown={
+                                                                handleMouseDown
                                                             }
                                                             id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                                         >
@@ -338,7 +359,9 @@ const GameStatisticsComponent = () => {
                                             return (
                                                 <TableCell
                                                     key={c.id}
-                                                    onClick={handleClickCell}
+                                                    onMouseDown={
+                                                        handleMouseDown
+                                                    }
                                                     id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                                 >
                                                     {value}
