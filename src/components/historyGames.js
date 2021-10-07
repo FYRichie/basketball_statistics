@@ -6,10 +6,7 @@ import {
     TableHead,
     TableCell,
     TableBody,
-    Typography,
     TablePagination,
-    Card,
-    CardContent,
     Container,
     Grid,
 } from "@material-ui/core";
