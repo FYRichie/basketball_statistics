@@ -1,4 +1,5 @@
 import { TableCell, Button, withStyles } from "@material-ui/core";
+import { findGame } from "../api";
 const StickyTableCell = withStyles((theme) => ({
     head: {
         left: 0,
@@ -70,7 +71,10 @@ export const createPlayersDisplayObject = (playersObject) => {
     const pdo = playersObject.map((p) => {
         const number = p.num;
         const name = p.name;
-        const playerTotalScore = p.score.freethrow.made + p.score.twopointer.made * 2 + p.score.threepointer.made * 3;
+        const playerTotalScore =
+            p.score.freethrow.made +
+            p.score.twopointer.made * 2 +
+            p.score.threepointer.made * 3;
         const freeThrowsMade = p.score.freethrow.made;
         const freeThrowsAttempt = p.score.freethrow.attempt;
         const twoPointersMade = p.score.twopointer.made;
@@ -115,7 +119,10 @@ export const getType = () => {
     return columns.map((c, index) => {
         if (index < 1)
             return (
-                <StickyTableCell key={c.id} style={{ top: 57, minWidth: c.minWidth }}>
+                <StickyTableCell
+                    key={c.id}
+                    style={{ top: 57, minWidth: c.minWidth }}
+                >
                     {c.label}
                 </StickyTableCell>
             );
@@ -162,4 +169,10 @@ export const getFoulType = (handleChange, selectedNum, seletcedID) => {
             >{`${f.type}:${f.desc}`}</Button>
         );
     });
+};
+export const initState = async (gameID, setOpponent) => {
+    const data = await findGame({
+        _id: gameID,
+    });
+    console.log(data);
 };
