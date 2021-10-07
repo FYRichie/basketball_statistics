@@ -19,14 +19,16 @@ exports.createGame = async (req, res) => {
 exports.findGame = async (req, res) => {
     // let date = req.body.date;
     // let opponent = req.body.opponent;
-    let contrain = req.body.constrain;
+    let constrain = req.body.constrain;
     let games = await Game.find(constrain); // { date: date, opponent: opponent }
+    console.log(games);
     res.status(200).send({ games: games });
 };
 
 exports.findGameById = async (req, res) => {
     let id = req.body.id;
     let games = await Game.find({ _id: id });
+    console.log(games);
     res.status(200).send({ games: games });
 };
 
