@@ -64,7 +64,6 @@ export const createPlayersObject = (
                     pointType: "freethrow",
                     made: "attempt",
                 });
-                console.log("freethrowattempt: ", freeThrowsAttempt);
                 const twoPointersMade = await findPoint({
                     gameId: gameID,
                     playerId: p.ID,
@@ -108,17 +107,14 @@ export const createPlayersObject = (
                     playerId: p.ID,
                 });
                 const foul = await findFoul({ gameId: gameID, playerId: p.ID });
-                console.log("foul: ", foul);
                 const block = await findBlock({
                     gameId: gameID,
                     playerId: p.ID,
                 });
-                console.log("block: ", block);
                 const turnover = await findTurnover({
                     gameId: gameID,
                     playerId: p.ID,
                 });
-                console.log("turnover: ", turnover);
                 return {
                     ID: p.ID,
                     num: p.num,

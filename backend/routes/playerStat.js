@@ -2,6 +2,13 @@
 
 const mongoose = require("mongoose");
 const PlayerStat = require("../models/playerStat");
+const assist = require("./assist");
+const block = require("./block");
+const turnover = require("./turnover");
+const rebound = require("./rebound");
+const steal = require("./steal");
+const foul = require("./foul");
+const point = require("./point");
 
 exports.createPlayerStat = async (req, res) => {
     let data = req.body.playerStat;
@@ -37,6 +44,13 @@ exports.findPlayerStat = async (req, res) => {
 
 exports.deletePlayerStat = async (req, res) => {
     let id = req.body.id;
+    assist.deleteAllAssist(id);
+    block.deleteAllBlock(id);
+    turnover.deleteAllTurnover(id);
+    rebound.deleteAllRebound(id);
+    steal.deleteAllSteal(id);
+    foul.deleteAllFoul(id);
+    point.deleteAllPoint(id);
     try {
         const deletePlayerStats = await PlayerStat.deleteOne({
             _id: id,
