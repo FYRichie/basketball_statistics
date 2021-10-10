@@ -20,7 +20,12 @@ import { findGame } from "../api";
 import moment from "moment";
 
 const columns = [
-    { id: "date", label: "DATE", minWidth: 100, format: (value) => moment(value).format("MMMM Do YYYY, h:mm a") },
+    {
+        id: "date",
+        label: "DATE",
+        minWidth: 100,
+        format: (value) => moment(value).format("MMMM Do YYYY, h:mm a"),
+    },
     { id: "opponent", label: "OPPONENT", minWidth: 400 },
 ];
 export default function HistoryGames() {
@@ -73,20 +78,35 @@ export default function HistoryGames() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {gameData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                return (
-                                    <TableRow onClick={() => handleEnterGame(row._id)}>
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell align={column.align}>
-                                                    {column.format ? column.format(value) : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                );
-                            })}
+                            {gameData
+                                .slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                )
+                                .map((row) => {
+                                    return (
+                                        <TableRow
+                                            onClick={() =>
+                                                handleEnterGame(row._id)
+                                            }
+                                        >
+                                            {columns.map((column) => {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell
+                                                        align={column.align}
+                                                    >
+                                                        {column.format
+                                                            ? column.format(
+                                                                  value
+                                                              )
+                                                            : value}
+                                                    </TableCell>
+                                                );
+                                            })}
+                                        </TableRow>
+                                    );
+                                })}
                         </TableBody>
                     </Table>
                 </TableContainer>
