@@ -31,6 +31,14 @@ exports.deleteSteal = async (req, res) => {
     }
 };
 
+exports.deleteAllSteal = async (id) => {
+    try {
+        await Steal.deleteMany({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateSteal = async (req, res) => {
     let id = req.body.id;
     let new_steal = req.body.steal;

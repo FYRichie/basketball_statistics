@@ -31,6 +31,14 @@ exports.deleteRebound = async (req, res) => {
     }
 };
 
+exports.deleteAllRebound = async (id) => {
+    try {
+        await Rebound.deleteMany({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateRebound = async (req, res) => {
     let id = req.body.id;
     let new_rebound = req.body.rebound;

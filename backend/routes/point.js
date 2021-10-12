@@ -31,6 +31,14 @@ exports.deletePoint = async (req, res) => {
     }
 };
 
+exports.deleteAllPoint = async (id) => {
+    try {
+        await Point.deleteMany({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updatePoint = async (req, res) => {
     let id = req.body.id;
     let new_point = req.body.point;

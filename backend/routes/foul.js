@@ -31,6 +31,14 @@ exports.deleteFoul = async (req, res) => {
     }
 };
 
+exports.deleteAllFoul = async (id) => {
+    try {
+        await Foul.deleteMany({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateFoul = async (req, res) => {
     let id = req.body.id;
     let new_foul = req.body.foul;

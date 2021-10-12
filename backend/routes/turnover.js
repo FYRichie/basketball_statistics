@@ -31,6 +31,14 @@ exports.deleteTurnover = async (req, res) => {
     }
 };
 
+exports.deleteAllTurnover = async (id) => {
+    try {
+        await Turnover.deleteMany({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateTurnover = async (req, res) => {
     let id = req.body.id;
     let new_turnover = req.body.turnover;
