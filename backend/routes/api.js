@@ -8,7 +8,7 @@
 // import reboundRoute from "./rebound";
 // import stealRoute from "./steal";
 // import turnoverRoute from "./turnover";
-// import personalStatRoute from "./personalStat";
+// import playerStatRoute from "./playerStat";
 const express = require("express");
 const router = express.Router();
 let gameRoute = require("./game");
@@ -19,7 +19,7 @@ let pointRoute = require("./point");
 let reboundRoute = require("./rebound");
 let stealRoute = require("./steal");
 let turnoverRoute = require("./turnover");
-let personalStatRoute = require("./personalStat");
+let playerStatRoute = require("./playerStat");
 const wrap =
     (fn) =>
     (...args) =>
@@ -31,21 +31,21 @@ router.post("/deleteGameById", wrap(gameRoute.deleteGameById));
 router.post("/findGame", wrap(gameRoute.findGame));
 router.post("/findGameById", wrap(gameRoute.findGameById));
 router.post("/updateGame", wrap(gameRoute.updateGame));
-router.post("/createPersonalStat", wrap(personalStatRoute.createPersonalStat));
-router.post("/findPersonalStat", wrap(personalStatRoute.findPersonalStat));
+router.post("/createPlayerStat", wrap(playerStatRoute.createPlayerStat));
+router.post("/findPlayerStat", wrap(playerStatRoute.findPlayerStat));
 router.post(
-    "/findPersonalStatByName",
-    wrap(personalStatRoute.findPersonalStatByName)
+    "/findPlayerStatByName",
+    wrap(playerStatRoute.findPlayerStatByName)
 );
 router.post(
-    "/findPersonalStatByGame",
-    wrap(personalStatRoute.findPersonalStatByGame)
+    "/findPlayerStatByGame",
+    wrap(playerStatRoute.findPlayerStatByGame)
 );
-router.post("/updatePersonalStat", wrap(personalStatRoute.updatePersonalStat));
-router.post("/deletePersonalStat", wrap(personalStatRoute.deletePersonalStat));
+router.post("/updatePlayerStat", wrap(playerStatRoute.updatePlayerStat));
+router.post("/deletePlayerStat", wrap(playerStatRoute.deletePlayerStat));
 router.post(
-    "/deletePersonalStatByGame",
-    wrap(personalStatRoute.deletePersonalStatByGame)
+    "/deletePlayerStatByGame",
+    wrap(playerStatRoute.deletePlayerStatByGame)
 );
 router.post("/createAssist", wrap(assistRoute.createAssist));
 router.post("/deleteAssist", wrap(assistRoute.deleteAssist));
