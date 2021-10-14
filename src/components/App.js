@@ -3,26 +3,24 @@ import GameStatistics from "./gameStatistics";
 import HistoryAndCreate from "./historyAndCreate";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Starting from "./starting";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
     const [gameID, setGameID] = useState("1234");
-    const [opponent, setOpponent] = useState("");
-    // const [HistoryAndCreateReact, gameID] = historyAndCreate();
     return (
-        <React.StrictMode>
-            {/* <BrowserRouter> */}
-            {/* <Switch> */}
-            <Starting />
-            <HistoryAndCreate
-                setGameID={setGameID}
-                gameID={gameID}
-                setOpponent={setOpponent}
-                opponent={opponent}
-            />
-            <GameStatistics gameID={gameID} />
-            {/* </Switch> */}
-            {/* // </BrowserRouter> */}
-        </React.StrictMode>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/historyorcreate">
+                    <HistoryAndCreate setGameID={setGameID} gameID={gameID} />
+                </Route>
+                <Route exact path="/game/:gameID">
+                    <GameStatistics />
+                </Route>
+                <Route exact path="/">
+                    <Starting />
+                </Route>
+            </Switch>
+        </BrowserRouter>
     );
 }
 
