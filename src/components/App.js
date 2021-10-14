@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import GameStatistics from "./gameStatistics";
 import HistoryAndCreate from "./historyAndCreate";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Starting from "./starting";
 
 function App() {
@@ -9,6 +10,8 @@ function App() {
     // const [HistoryAndCreateReact, gameID] = historyAndCreate();
     return (
         <React.StrictMode>
+            {/* <BrowserRouter> */}
+            {/* <Switch> */}
             <Starting />
             <HistoryAndCreate
                 setGameID={setGameID}
@@ -17,6 +20,8 @@ function App() {
                 opponent={opponent}
             />
             <GameStatistics gameID={gameID} />
+            {/* </Switch> */}
+            {/* // </BrowserRouter> */}
         </React.StrictMode>
     );
 }
