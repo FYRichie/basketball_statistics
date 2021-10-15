@@ -320,30 +320,37 @@ export const initState = async (
 };
 export const QuarterStatistics = (props) => {
     const { quaterPoints } = props;
+    const sumValues = (obj) => Object.values(obj).reduce((a, b) => a + b);
     return (
-        <TableContainer style={{ maxHeight: "180px" }}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell colSpan={1}>第一節</TableCell>
-                        <TableCell colSpan={1}>第二節</TableCell>
-                        <TableCell colSpan={1}>第三節</TableCell>
-                        <TableCell colSpan={1}>第四節</TableCell>
-                        <TableCell colSpan={1}>延長一</TableCell>
-                        <TableCell colSpan={1}>延長二</TableCell>
-                        <TableCell colSpan={1}>延長三</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    <TableRow>
-                        {Object.keys(quaterPoints).map((quater) => {
-                            return (
-                                <TableCell>{quaterPoints[quater]}</TableCell>
-                            );
-                        })}
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <>
+            <TableContainer style={{ maxHeight: "180px" }}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell colSpan={1}>總分</TableCell>
+                            <TableCell colSpan={1}>第一節</TableCell>
+                            <TableCell colSpan={1}>第二節</TableCell>
+                            <TableCell colSpan={1}>第三節</TableCell>
+                            <TableCell colSpan={1}>第四節</TableCell>
+                            <TableCell colSpan={1}>延長一</TableCell>
+                            <TableCell colSpan={1}>延長二</TableCell>
+                            <TableCell colSpan={1}>延長三</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>{sumValues(quaterPoints)}</TableCell>
+                            {Object.keys(quaterPoints).map((quater) => {
+                                return (
+                                    <TableCell>
+                                        {quaterPoints[quater]}
+                                    </TableCell>
+                                );
+                            })}
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
     );
 };
