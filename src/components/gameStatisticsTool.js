@@ -1,9 +1,17 @@
-import { TableCell, Button, withStyles } from "@material-ui/core";
+import {
+    TableCell,
+    Button,
+    withStyles,
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableBody,
+} from "@material-ui/core";
 import {
     findAssist,
     findBlock,
     findFoul,
-    findGame,
     findGameById,
     findPlayerStat,
     findPoint,
@@ -256,7 +264,9 @@ export const initState = async (
     setOpponent,
     setPlayers,
     setPlayersObject,
-    setPlayersDisplayObject
+    setPlayersDisplayObject,
+    quarterPoints,
+    setQuarterPoints
 ) => {
     const [game] = await findGameById(gameID);
     // console.log(data);
@@ -272,7 +282,68 @@ export const initState = async (
     });
     setPlayers(players);
     const po = await createPlayersObject(players, gameID);
-    console.log(po);
     setPlayersObject(po);
     setPlayersDisplayObject(createPlayersDisplayObject(po));
+    let _qP = quarterPoints;
+    const quarters = Object.keys(quarterPoints);
+    for (let i = 0; i < quarters.length; i++) {
+        const freeThrowMade = await findPoint({
+            gameId: gameID,
+            quarter: quarters[i],
+            pointType: "freethrow",
+            made: "made",
+        });
+        const twoPointersMade = await findPoint({
+            gameId: gameID,
+            quarter: quarters[i],
+            pointType: "twopointer",
+            made: "made",
+        });
+        const threePointersMade = await findPoint({
+            gameId: gameID,
+            quarter: quarters[i],
+            pointType: "threepointer",
+            made: "made",
+        });
+        console.log(
+            freeThrowMade.length,
+            twoPointersMade.length,
+            threePointersMade.length
+        );
+        _qP[quarters[i]] =
+            freeThrowMade.length +
+            2 * twoPointersMade.length +
+            3 * threePointersMade.length;
+    }
+    console.log(_qP);
+    setQuarterPoints(_qP);
+};
+export const QuarterStatistics = (props) => {
+    const { quaterPoints } = props;
+    return (
+        <TableContainer style={{ maxHeight: "180px" }}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell colSpan={1}>第一節</TableCell>
+                        <TableCell colSpan={1}>第二節</TableCell>
+                        <TableCell colSpan={1}>第三節</TableCell>
+                        <TableCell colSpan={1}>第四節</TableCell>
+                        <TableCell colSpan={1}>延長一</TableCell>
+                        <TableCell colSpan={1}>延長二</TableCell>
+                        <TableCell colSpan={1}>延長三</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        {Object.keys(quaterPoints).map((quater) => {
+                            return (
+                                <TableCell>{quaterPoints[quater]}</TableCell>
+                            );
+                        })}
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 };

@@ -40,11 +40,11 @@ import {
 } from "../api";
 import {
     columns,
-    createPlayersObject,
     createPlayersDisplayObject,
     getType,
     getFoulType,
     initState,
+    QuarterStatistics,
 } from "./gameStatisticsTool";
 import AddPlayer from "./addPlayer";
 
@@ -74,18 +74,22 @@ const GameStatisticsComponent = () => {
     const [period, setPeriod] = useState(1);
     const [openAddPlayer, setOpenAddPlayer] = useState(false);
     const [players, setPlayers] = useState([]);
-    const [playersObject, setPlayersObject] = useState(
-        // createPlayersObject(players, gameID)
-        []
-    );
-    const [playersDisplayObject, setPlayersDisplayObject] = useState(
-        // createPlayersDisplayObject(playersObject)
-        []
-    );
+    const [playersObject, setPlayersObject] = useState([]);
+    const [playersDisplayObject, setPlayersDisplayObject] = useState([]);
     const [clickTime, setClickTime] = useState(null);
+    const [quarterPoints, setQuarterPoints] = useState({
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+    });
 
     const changePlayersObject = async (playerNum, event, add) => {
         console.log(playerNum, event, add);
+        const _qP = quarterPoints;
         setPlayersObject(
             playersObject.map((p) => {
                 if (p.num !== playerNum) return p;
@@ -93,10 +97,13 @@ const GameStatisticsComponent = () => {
                 if (event === "playerStatus") _p.oncourt = !p.oncourt;
                 else if (event === "freeThrowsMade") {
                     _p.score.freethrow.made += add;
-                    if (add === 1)
+                    if (add === 1) {
                         createPoint(gameID, _p.ID, period, "freethrow", "made");
-                    else
+                        _qP[period] += 1;
+                    } else {
                         deletePoint(gameID, _p.ID, period, "freethrow", "made");
+                        _qP[period] -= 1;
+                    }
                 } else if (event === "freeThrowsAttempt") {
                     _p.score.freethrow.attempt += add;
                     if (add === 1)
@@ -117,7 +124,7 @@ const GameStatisticsComponent = () => {
                         );
                 } else if (event === "twoPointersMade") {
                     _p.score.twopointer.made += add;
-                    if (add === 1)
+                    if (add === 1) {
                         createPoint(
                             gameID,
                             _p.ID,
@@ -125,7 +132,8 @@ const GameStatisticsComponent = () => {
                             "twopointer",
                             "made"
                         );
-                    else
+                        _qP[period] += 2;
+                    } else {
                         deletePoint(
                             gameID,
                             _p.ID,
@@ -133,6 +141,8 @@ const GameStatisticsComponent = () => {
                             "twopointer",
                             "made"
                         );
+                        _qP[period] -= 2;
+                    }
                 } else if (event === "twoPointersAttempt") {
                     _p.score.twopointer.attempt += add;
                     if (add === 1)
@@ -153,7 +163,7 @@ const GameStatisticsComponent = () => {
                         );
                 } else if (event === "threePointersMade") {
                     _p.score.threepointer.made += add;
-                    if (add === 1)
+                    if (add === 1) {
                         createPoint(
                             gameID,
                             _p.ID,
@@ -161,7 +171,8 @@ const GameStatisticsComponent = () => {
                             "threepointer",
                             "made"
                         );
-                    else
+                        _qP[period] += 3;
+                    } else {
                         deletePoint(
                             gameID,
                             _p.ID,
@@ -169,6 +180,8 @@ const GameStatisticsComponent = () => {
                             "threepointer",
                             "made"
                         );
+                        _qP[period] -= 3;
+                    }
                 } else if (event === "threePointersAttempt") {
                     _p.score.threepointer.attempt += add;
                     if (add === 1)
@@ -220,6 +233,7 @@ const GameStatisticsComponent = () => {
                 return _p;
             })
         );
+        setQuarterPoints(_qP);
         setPlayersDisplayObject(createPlayersDisplayObject(playersObject));
     };
     const handleMouseDown = (e) => {
@@ -258,7 +272,6 @@ const GameStatisticsComponent = () => {
     const handleCloseAddPlayer = () => {
         setOpenAddPlayer(false);
     };
-
     const handleMouseUp = () => {
         let time = new Date();
         // console.log("time mouse up: ", time.getTime());
@@ -281,7 +294,9 @@ const GameStatisticsComponent = () => {
             setOpponent,
             setPlayers,
             setPlayersObject,
-            setPlayersDisplayObject
+            setPlayersDisplayObject,
+            quarterPoints,
+            setQuarterPoints
         );
     }, []);
 
@@ -382,6 +397,7 @@ const GameStatisticsComponent = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <QuarterStatistics quaterPoints={quarterPoints} />
             </Paper>
 
             <Dialog
