@@ -70,6 +70,13 @@ const findPlayerStat = async (constrain) => {
     return data;
 };
 
+const findPlayerStatByGame = async (gameId) => {
+    const {
+        data: { data },
+    } = await instance.post("/findPlayerStatByGame", { gameId: gameId });
+    return data;
+};
+
 const deletePlayerStat = async (id) => {
     const {
         data: { message },
@@ -330,6 +337,7 @@ export {
     updateGame,
     createPlayerStat,
     findPlayerStat,
+    findPlayerStatByGame,
     deletePlayerStat,
     updatePlayerStat,
     createAssist,

@@ -39,6 +39,14 @@ exports.deleteAllTurnover = async (id) => {
     }
 };
 
+exports.findAllTurnoverById = async (id) => {
+    try {
+        return await Turnover.find({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateTurnover = async (req, res) => {
     let id = req.body.id;
     let new_turnover = req.body.turnover;

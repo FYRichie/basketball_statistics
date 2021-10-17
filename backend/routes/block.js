@@ -39,6 +39,14 @@ exports.deleteAllBlock = async (id) => {
     }
 };
 
+exports.findAllBlockById = async (id) => {
+    try {
+        return await Block.find({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateBlock = async (req, res) => {
     let id = req.body.id;
     let new_block = req.body.block;

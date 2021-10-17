@@ -31,6 +31,14 @@ exports.deleteSteal = async (req, res) => {
     }
 };
 
+exports.findAllStealById = async (id) => {
+    try {
+        return await Steal.find({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.deleteAllSteal = async (id) => {
     try {
         await Steal.deleteMany({ playerId: id }).exec();

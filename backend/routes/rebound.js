@@ -39,6 +39,14 @@ exports.deleteAllRebound = async (id) => {
     }
 };
 
+exports.findAllReboundById = async (id) => {
+    try {
+        return await Rebound.find({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateRebound = async (req, res) => {
     let id = req.body.id;
     let new_rebound = req.body.rebound;

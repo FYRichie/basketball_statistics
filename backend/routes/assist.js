@@ -39,6 +39,14 @@ exports.deleteAllAssist = async (id) => {
     }
 };
 
+exports.findAllAssistById = async (id) => {
+    try {
+        return await Assist.find({ playerId: id }).exec();
+    } catch (e) {
+        console.log(e);
+    }
+};
+
 exports.updateAssist = async (req, res) => {
     let id = req.body.id;
     let new_assist = req.body.assist;

@@ -15,7 +15,7 @@ const PointSchema = new Schema({
     },
     quarter: {
         type: Number,
-        required: [true, "quater field is required."],
+        required: [true, "quarter field is required."],
     },
     pointType: {
         type: String,

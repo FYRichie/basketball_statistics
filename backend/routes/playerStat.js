@@ -30,9 +30,81 @@ exports.findPlayerStatByName = async (req, res) => {
 };
 
 exports.findPlayerStatByGame = async (req, res) => {
-    let gameID = req.body.gameID;
-    let personalStats = await PlayerStat.find({ gameID: gameID });
-    res.status(200).send({ data: personalStats });
+    let gameId = req.body.gameId;
+    let personalStats = await PlayerStat.find({ gameId: gameId });
+    // console.log(personalStats[0]);
+    let returnObject = personalStats.map((p) => {
+        return {
+            id: p._id,
+            num: p.number,
+            name: p.name,
+        };
+    });
+    let result;
+    for (let i = 0; i < personalStats.length; i++) {
+        result = await assist.findAllAssistById(personalStats[i]._id);
+        let assists = [0, 0, 0, 0, 0, 0, 0];
+        for (let j = 0; j < result.length; j++) {
+            assists[result[j]["quarter"] - 1] += 1;
+        }
+        returnObject[i]["assist"] = assists;
+        result = await block.findAllBlockById(personalStats[i]._id);
+        let blocks = [0, 0, 0, 0, 0, 0, 0];
+        for (let j = 0; j < result.length; j++) {
+            blocks[result[j]["quarter"] - 1] += 1;
+        }
+        returnObject[i]["block"] = blocks;
+        result = await foul.findAllFoulById(personalStats[i]._id);
+        let fouls = [[], [], [], [], [], [], []];
+        for (let j = 0; j < result.length; j++) {
+            fouls[result[j]["quarter"] - 1].push(result[j].foulType);
+        }
+        returnObject[i]["foul"] = fouls;
+        result = await point.findAllPointById(personalStats[i]._id);
+        let points = {
+            threepointer: {
+                made: [0, 0, 0, 0, 0, 0, 0],
+                attempt: [0, 0, 0, 0, 0, 0, 0],
+            },
+            twopointer: {
+                made: [0, 0, 0, 0, 0, 0, 0],
+                attempt: [0, 0, 0, 0, 0, 0, 0],
+            },
+            freethrow: {
+                made: [0, 0, 0, 0, 0, 0, 0],
+                attempt: [0, 0, 0, 0, 0, 0, 0],
+            },
+        };
+        for (let j = 0; j < result.length; j++) {
+            element = result[j];
+            points[element["pointType"]][element["made"]][
+                element["quarter"] - 1
+            ] += 1;
+        }
+        returnObject[i]["score"] = points;
+        result = await rebound.findAllReboundById(personalStats[i]._id);
+        let rebounds = {
+            offensive: [0, 0, 0, 0, 0, 0, 0],
+            deffensive: [0, 0, 0, 0, 0, 0, 0],
+        };
+        for (let j = 0; j < result.length; j++) {
+            rebounds[result[j]["reboundType"]][result[j]["quarter"] - 1] += 1;
+        }
+        returnObject[i]["rebound"] = rebounds;
+        result = await steal.findAllStealById(personalStats[i]._id);
+        let steals = [0, 0, 0, 0, 0, 0, 0];
+        for (let j = 0; j < result.length; j++) {
+            steals[result[j]["quarter"] - 1] += 1;
+        }
+        returnObject[i]["steal"] = steals;
+        result = await turnover.findAllTurnoverById(personalStats[i]._id);
+        let turnovers = [0, 0, 0, 0, 0, 0, 0];
+        for (let j = 0; j < result.length; j++) {
+            turnovers[result[j]["quarter"] - 1] += 1;
+        }
+        returnObject[i]["turnover"] = turnovers;
+    }
+    res.status(200).send({ data: returnObject });
 };
 
 exports.findPlayerStat = async (req, res) => {
