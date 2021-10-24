@@ -118,7 +118,7 @@ const AddPlayer = (props) => {
             <DialogTitle>修改球員名單</DialogTitle>
             <DialogContent>
                 <List>{getPlayerList()}</List>
-                {players.length < 12 ? (
+                {players.length < 15 ? (
                     <Box
                         component="form"
                         sx={{
