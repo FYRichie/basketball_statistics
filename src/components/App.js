@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Starting from "./starting";
 
 function App() {
-    const [gameID, setGameID] = useState("1234");
+    const [gameID, setGameID] = useState("");
     return (
         <BrowserRouter>
             <Switch>
