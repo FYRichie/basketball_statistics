@@ -13,7 +13,7 @@ import {
 import { Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { findGame } from "../api";
+import { findAllGame } from "../api";
 import moment from "moment";
 
 const columns = [
@@ -44,7 +44,7 @@ export default function HistoryGames() {
     };
     const handleGameReload = async () => {
         try {
-            const data = await findGame();
+            const data = await findAllGame();
             console.log(data);
             setGameData(data);
         } catch (err) {

@@ -3,9 +3,8 @@ import {
     findAssist,
     findBlock,
     findFoul,
-    findGame,
     findGameById,
-    findPlayerStat,
+    findPlayerStatByGameId,
     findPoint,
     findRebound,
     findSteal,
@@ -261,7 +260,7 @@ export const initState = async (
     const [game] = await findGameById(gameID);
     // console.log(data);
     setOpponent(game.opponent);
-    const P = await findPlayerStat({ gameId: gameID });
+    const P = await findPlayerStatByGameId(gameID);
     // console.log(players);
     const players = P.map((p) => {
         return {
