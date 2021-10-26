@@ -48,6 +48,7 @@ export default function HistoryGames() {
             console.log(data);
             setGameData(data);
         } catch (err) {
+            console.log(err);
             setAlert({
                 open: true,
                 severity: "error",

@@ -8,7 +8,6 @@ import {
     TableRow,
     TableBody,
 } from "@material-ui/core";
-import { findPlayerStatByGameId } from "../api";
 import {
     findAssist,
     findBlock,

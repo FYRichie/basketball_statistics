@@ -8,7 +8,7 @@ var cors = require("cors");
 var mongoose = require("mongoose");
 const path = require("path");
 
-const apiRoutes = require("./backend/routes/api");
+const apiRoutes = require("./backend/routes/index");
 
 require("dotenv").config();
 const app = express();
