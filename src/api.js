@@ -118,12 +118,10 @@ const deleteAssist = async (gameId, playerId, quarter) => {
 const createBlock = async (gameId, playerId, quarter) => {
     const {
         data: { id },
-    } = await instance.post("/createBlock", {
-        block: {
-            gameId: gameId,
-            playerId: playerId,
-            quarter: quarter,
-        },
+    } = await instance.post("/block", {
+        gameId: gameId,
+        playerId: playerId,
+        quarter: quarter,
     });
 
     return id;
@@ -150,13 +148,11 @@ const deleteBlock = async (gameId, playerId, quarter) => {
 const createFoul = async (gameId, playerId, quarter, foulType) => {
     const {
         data: { id },
-    } = await instance.post("/createFoul", {
-        foul: {
-            gameId: gameId,
-            playerId: playerId,
-            quarter: quarter,
-            foulType: foulType,
-        },
+    } = await instance.post("/foul", {
+        gameId: gameId,
+        playerId: playerId,
+        quarter: quarter,
+        foulType: foulType,
     });
 
     return id;
@@ -184,14 +180,12 @@ const deleteFoul = async (gameId, playerId, quarter, foulType) => {
 const createPoint = async (gameId, playerId, quarter, pointType, made) => {
     const {
         data: { id },
-    } = await instance.post("/createPoint", {
-        point: {
-            gameId: gameId,
-            playerId: playerId,
-            quarter: quarter,
-            pointType: pointType,
-            made: made,
-        },
+    } = await instance.post("/point", {
+        gameId: gameId,
+        playerId: playerId,
+        quarter: quarter,
+        pointType: pointType,
+        made: made,
     });
 
     return id;
@@ -220,14 +214,12 @@ const deletePoint = async (gameId, playerId, quarter, pointType, made) => {
 const createRebound = async (gameId, playerId, quarter, reboundType) => {
     const {
         data: { id },
-    } = await instance.post("/createRebound", {
-        rebound: {
-            gameId: gameId,
-            playerId: playerId,
-            quarter: quarter,
-            reboundType: reboundType,
-            // 'offensive', 'defensive'
-        },
+    } = await instance.post("/rebound", {
+        gameId: gameId,
+        playerId: playerId,
+        quarter: quarter,
+        reboundType: reboundType,
+        // 'offensive', 'defensive'
     });
 
     return id;
@@ -256,12 +248,10 @@ const deleteRebound = async (gameId, playerId, quarter, reboundType) => {
 const createSteal = async (gameId, playerId, quarter) => {
     const {
         data: { id },
-    } = await instance.post("/createSteal", {
-        steal: {
-            gameId: gameId,
-            playerId: playerId,
-            quarter: quarter,
-        },
+    } = await instance.post("/steal", {
+        gameId: gameId,
+        playerId: playerId,
+        quarter: quarter,
     });
 
     return id;
@@ -288,12 +278,10 @@ const deleteSteal = async (gameId, playerId, quarter) => {
 const createTurnover = async (gameId, playerId, quarter) => {
     const {
         data: { id },
-    } = await instance.post("/createTurnover", {
-        turnover: {
-            gameId: gameId,
-            playerId: playerId,
-            quarter: quarter,
-        },
+    } = await instance.post("/turnover", {
+        gameId: gameId,
+        playerId: playerId,
+        quarter: quarter,
     });
 
     return id;
