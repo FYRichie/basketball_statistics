@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import GameStatistics from "./gameStatistics";
 import HistoryAndCreate from "./historyAndCreate";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Starting from "./starting";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
     const [gameID, setGameID] = useState("");

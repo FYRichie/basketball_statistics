@@ -5,4 +5,4 @@ node_modules/
 package-lock.json
 _src/
 build/
-utils/
+utils/delete_all.js

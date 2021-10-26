@@ -20,7 +20,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Alert, AlertTitle } from "@mui/material";
 import { createPlayerStat, deletePlayerStat } from "../api";
 import {
-    createPlayersObject,
+    // createPlayersObject,
     createPlayersDisplayObject,
 } from "./gameStatisticsTool";
 
@@ -70,12 +70,44 @@ const AddPlayer = (props) => {
                 },
             ];
             setPlayers(newPlayers);
-            const _playersObject = await createPlayersObject(
-                newPlayers,
-                gameID,
-                newPlayers.length - 1,
-                playersObject
-            );
+            const _playersObject = [
+                ...playersObject,
+                {
+                    ID: playerID,
+                    num: playerNum,
+                    name: playerName,
+                    score: {
+                        freethrow: {
+                            made: [0, 0, 0, 0, 0, 0, 0],
+                            attempt: [0, 0, 0, 0, 0, 0, 0],
+                        },
+                        twopointer: {
+                            made: [0, 0, 0, 0, 0, 0, 0],
+                            attempt: [0, 0, 0, 0, 0, 0, 0],
+                        },
+                        threepointer: {
+                            made: [0, 0, 0, 0, 0, 0, 0],
+                            attempt: [0, 0, 0, 0, 0, 0, 0],
+                        },
+                    },
+                    rebound: {
+                        offensive: [0, 0, 0, 0, 0, 0, 0],
+                        deffensive: [0, 0, 0, 0, 0, 0, 0],
+                    },
+                    assist: [0, 0, 0, 0, 0, 0, 0],
+                    steal: [0, 0, 0, 0, 0, 0, 0],
+                    foul: [[], [], [], [], [], [], []],
+                    block: [0, 0, 0, 0, 0, 0, 0],
+                    turnover: [0, 0, 0, 0, 0, 0, 0],
+                    oncourt: false,
+                },
+            ];
+            // await createPlayersObject(
+            //     newPlayers,
+            //     gameID,
+            //     newPlayers.length - 1,
+            //     playersObject
+            // );
             setPlayersObject(_playersObject);
             const playersDisplayObject =
                 createPlayersDisplayObject(_playersObject);
