@@ -282,6 +282,7 @@ export const initState = async (
     // console.log(data);
     setOpponent(game.opponent);
     const P = await findPlayerStatByGameId(gameID);
+    console.log(P);
     // console.log(players);
     // const players = P.map((p) => {
     //     return {

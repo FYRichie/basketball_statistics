@@ -28,10 +28,10 @@ const findAllGame = async () => {
 
 const findGameById = async (id) => {
     const {
-        data: { games },
+        data: { data },
     } = await instance.get(`/game?gameId=${id}`);
-    console.log(games);
-    return games;
+    console.log(data);
+    return data;
 };
 
 const deleteGame = async (id) => {
@@ -63,6 +63,7 @@ const findPlayerStatByGameId = async (gameId) => {
     const {
         data: { data },
     } = await instance.get(`/playerstat?gameId=${gameId}`);
+    console.log(data);
     return data;
 };
 

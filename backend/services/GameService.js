@@ -6,6 +6,7 @@ const PlayerStatService = require("./PlayerStatService");
 class GameService {
     constructor() {
         this.model = Game;
+        this.PlayerStatService = new PlayerStatService();
     }
     getAll = async () => {
         return await this.model.find({});
@@ -28,7 +29,7 @@ class GameService {
     delete = async (gameId) => {
         try {
             await this.model.deleteOne({ _d: gameId }).exec();
-            await PlayerStatService.deleteByGameId(gameId);
+            await this.PlayerStatService.deleteByGameId(gameId);
         } catch (err) {
             throw err;
         }
