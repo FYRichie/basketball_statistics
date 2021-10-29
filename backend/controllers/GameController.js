@@ -17,7 +17,6 @@ class GameController {
 
     get = async (req, res) => {
         const gameId = req.query["gameId"];
-        console.log(`game get ${gameId}`);
         let objects;
         try {
             if (gameId) {
@@ -25,7 +24,6 @@ class GameController {
             } else {
                 objects = await this.service.getAll();
             }
-            console.log(objects);
             res.status(200).send({ data: objects, message: "success" });
         } catch (err) {
             res.status(403).send({ message: err.toString(), data: [] });

@@ -73,7 +73,7 @@ const GameStatisticsComponent = () => {
     const [selectedLabel, setSelectedLabel] = useState("");
     const [period, setPeriod] = useState(1);
     const [openAddPlayer, setOpenAddPlayer] = useState(false);
-    const [players, setPlayers] = useState([]);
+    // const [players, setPlayers] = useState([]);
     const [playersObject, setPlayersObject] = useState([]);
     const [playersDisplayObject, setPlayersDisplayObject] = useState([]);
     const [clickTime, setClickTime] = useState(null);
@@ -98,10 +98,10 @@ const GameStatisticsComponent = () => {
                 else if (event === "freeThrowsMade") {
                     _p.score.freethrow.made[period] += add;
                     if (add === 1) {
-                        createPoint(gameID, _p.ID, period, "freethrow", "made");
+                        createPoint(gameID, _p.id, period, "freethrow", "made");
                         _qP[period] += 1;
                     } else {
-                        deletePoint(gameID, _p.ID, period, "freethrow", "made");
+                        deletePoint(gameID, _p.id, period, "freethrow", "made");
                         _qP[period] -= 1;
                     }
                 } else if (event === "freeThrowsAttempt") {
@@ -109,7 +109,7 @@ const GameStatisticsComponent = () => {
                     if (add === 1)
                         createPoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "freethrow",
                             "attempt"
@@ -117,7 +117,7 @@ const GameStatisticsComponent = () => {
                     else
                         deletePoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "freethrow",
                             "attempt"
@@ -127,7 +127,7 @@ const GameStatisticsComponent = () => {
                     if (add === 1) {
                         createPoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "twopointer",
                             "made"
@@ -136,7 +136,7 @@ const GameStatisticsComponent = () => {
                     } else {
                         deletePoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "twopointer",
                             "made"
@@ -148,7 +148,7 @@ const GameStatisticsComponent = () => {
                     if (add === 1)
                         createPoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "twopointer",
                             "attempt"
@@ -156,7 +156,7 @@ const GameStatisticsComponent = () => {
                     else
                         deletePoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "twopointer",
                             "attempt"
@@ -166,7 +166,7 @@ const GameStatisticsComponent = () => {
                     if (add === 1) {
                         createPoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "threepointer",
                             "made"
@@ -175,7 +175,7 @@ const GameStatisticsComponent = () => {
                     } else {
                         deletePoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "threepointer",
                             "made"
@@ -187,7 +187,7 @@ const GameStatisticsComponent = () => {
                     if (add === 1)
                         createPoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "threepointer",
                             "attempt"
@@ -195,7 +195,7 @@ const GameStatisticsComponent = () => {
                     else
                         deletePoint(
                             gameID,
-                            _p.ID,
+                            _p.id,
                             period,
                             "threepointer",
                             "attempt"
@@ -203,32 +203,32 @@ const GameStatisticsComponent = () => {
                 } else if (event === "offensiveRebound") {
                     _p.rebound.offensive[period] += add;
                     if (add === 1)
-                        createRebound(gameID, _p.ID, period, "offensive");
-                    else deleteRebound(gameID, _p.ID, period, "offensive");
+                        createRebound(gameID, _p.id, period, "offensive");
+                    else deleteRebound(gameID, _p.id, period, "offensive");
                 } else if (event === "deffensiveRebound") {
                     _p.rebound.deffensive[period] += add;
                     if (add === 1)
-                        createRebound(gameID, _p.ID, period, "deffensive");
-                    else deleteRebound(gameID, _p.ID, period, "deffensive");
+                        createRebound(gameID, _p.id, period, "deffensive");
+                    else deleteRebound(gameID, _p.id, period, "deffensive");
                 } else if (event === "assist") {
                     _p.assist[period] += add;
-                    if (add === 1) createAssist(gameID, _p.ID, period);
-                    else deleteAssist(gameID, _p.ID, period);
+                    if (add === 1) createAssist(gameID, _p.id, period);
+                    else deleteAssist(gameID, _p.id, period);
                 } else if (event === "steal") {
                     _p.steal[period] += add;
-                    if (add === 1) createSteal(gameID, _p.ID, period);
-                    else deleteSteal(gameID, _p.ID, period);
+                    if (add === 1) createSteal(gameID, _p.id, period);
+                    else deleteSteal(gameID, _p.id, period);
                 } else if (event === "foul") {
                     _p.foul[period].push(add); // foul type, count length
-                    createFoul(gameID, _p.ID, period, add);
+                    createFoul(gameID, _p.id, period, add);
                 } else if (event === "block") {
                     _p.block[period] += add;
-                    if (add === 1) createBlock(gameID, _p.ID, period);
-                    else deleteBlock(gameID, _p.ID, period);
+                    if (add === 1) createBlock(gameID, _p.id, period);
+                    else deleteBlock(gameID, _p.id, period);
                 } else if (event === "turnover") {
                     _p.turnover[period] += add;
-                    if (add === 1) createTurnover(gameID, _p.ID, period);
-                    else deleteTurnover(gameID, _p.ID, period);
+                    if (add === 1) createTurnover(gameID, _p.id, period);
+                    else deleteTurnover(gameID, _p.id, period);
                 }
                 return _p;
             })
@@ -238,18 +238,23 @@ const GameStatisticsComponent = () => {
     };
     const handleMouseDown = (e) => {
         const [num, name, id, label] = e.target.id.split("-");
-        console.log(e.target.id);
+        // console.log(e.target.id);
         if (id === "playerTotalScore" || id === "rebound") return;
         else if (id === "playerStatus") {
             changePlayersObject(num, id, 0);
             return;
         }
         let time = new Date();
-        setClickTime(time.getTime());
         setSelectedNum(num);
         setSelectedName(name);
         setSelectedID(id);
         setSelectedLabel(label);
+        if (id === "foul") {
+            setClickTime(null);
+            setOpenChangeStatistics(true);
+        }
+        let clickId = setTimeout(openChangeStatisticsDialog, 400);
+        setClickTime(clickId);
         // setOpenChangeStatistics(true);
     };
     const handleCloseChange = () => {
@@ -271,33 +276,42 @@ const GameStatisticsComponent = () => {
     const handleCloseAddPlayer = () => {
         setOpenAddPlayer(false);
     };
+
     const handleMouseUp = () => {
-        let time = new Date();
         if (clickTime !== null) {
-            if (time.getTime() - clickTime > 400) {
-                setClickTime(null);
-                setOpenChangeStatistics(true);
-            } else {
-                handleChange(selectedNum, selectedID, 1);
-                setClickTime(null);
-                setOpenChangeStatistics(false);
-            }
+            clearTimeout(clickTime);
+            handleChange(selectedNum, selectedID, 1);
+            setClickTime(null);
         }
+        // let time = new Date();
+        // if (clickTime !== null) {
+        //     if (time.getTime() - clickTime > 400) {
+
+        // } else {
+        //         handleChange(selectedNum, selectedID, 1);
+        //         setClickTime(null);
+        //         setOpenChangeStatistics(false);
+        //     }
+        // }
+    };
+
+    const openChangeStatisticsDialog = () => {
+        setOpenChangeStatistics(true);
+        setClickTime(null);
     };
     useEffect(() => {
         initState(
             gameID,
             setOpponent,
-            setPlayers,
+            // setPlayers,
             setPlayersObject,
             setPlayersDisplayObject,
-            // quarterPoints,
             setQuarterPoints
         );
     }, []);
 
     return (
-        <Container onMouseUp={handleMouseUp}>
+        <Container onMouseUp={handleMouseUp} onTouchUp={handleMouseUp}>
             <Box sx={{ marginTop: 100, width: "inherit" }}>
                 <AppBar position="static">
                     <Toolbar>
@@ -369,6 +383,9 @@ const GameStatisticsComponent = () => {
                                                             onMouseDown={
                                                                 handleMouseDown
                                                             }
+                                                            onTouchDown={
+                                                                handleMouseDown
+                                                            }
                                                             id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                                         >
                                                             {value}
@@ -430,8 +447,8 @@ const GameStatisticsComponent = () => {
             </Dialog>
             <Dialog open={openAddPlayer} onClose={handleCloseAddPlayer}>
                 <AddPlayer
-                    players={players}
-                    setPlayers={setPlayers}
+                    // players={players}
+                    // setPlayers={setPlayers}
                     playersObject={playersObject}
                     setPlayersObject={setPlayersObject}
                     setPlayersDisplayObject={setPlayersDisplayObject}

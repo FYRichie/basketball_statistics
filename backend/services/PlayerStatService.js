@@ -40,26 +40,34 @@ class PlayerStatService {
         // console.log(returnObject);
         let result;
         for (let i = 0; i < playerStats.length; i++) {
-            result = await this.AssistService.getByPlayerId(playerStats[i]._id);
+            result = await this.AssistService.get({
+                playerId: playerStats[i]._id,
+            });
             // console.log("result: ", result);
             let assists = [0, 0, 0, 0, 0, 0, 0];
             for (let j = 0; j < result.length; j++) {
                 assists[result[j]["quarter"] - 1] += 1;
             }
             returnObject[i]["assist"] = assists;
-            result = await this.BlockService.getByPlayerId(playerStats[i]._id);
+            result = await this.BlockService.get({
+                playerId: playerStats[i]._id,
+            });
             let blocks = [0, 0, 0, 0, 0, 0, 0];
             for (let j = 0; j < result.length; j++) {
                 blocks[result[j]["quarter"] - 1] += 1;
             }
             returnObject[i]["block"] = blocks;
-            result = await this.FoulService.getByPlayerId(playerStats[i]._id);
+            result = await this.FoulService.get({
+                playerId: playerStats[i]._id,
+            });
             let fouls = [[], [], [], [], [], [], []];
             for (let j = 0; j < result.length; j++) {
                 fouls[result[j]["quarter"] - 1].push(result[j].foulType);
             }
             returnObject[i]["foul"] = fouls;
-            result = await this.PointService.getByPlayerId(playerStats[i]._id);
+            result = await this.PointService.get({
+                playerId: playerStats[i]._id,
+            });
             let points = {
                 threepointer: {
                     made: [0, 0, 0, 0, 0, 0, 0],
@@ -82,9 +90,9 @@ class PlayerStatService {
                 ] += 1;
             }
             returnObject[i]["score"] = points;
-            result = await this.ReboundService.getByPlayerId(
-                playerStats[i]._id
-            );
+            result = await this.ReboundService.get({
+                playerId: playerStats[i]._id,
+            });
             let rebounds = {
                 offensive: [0, 0, 0, 0, 0, 0, 0],
                 deffensive: [0, 0, 0, 0, 0, 0, 0],
@@ -95,15 +103,17 @@ class PlayerStatService {
                 ] += 1;
             }
             returnObject[i]["rebound"] = rebounds;
-            result = await this.StealService.getByPlayerId(playerStats[i]._id);
+            result = await this.StealService.get({
+                playerId: playerStats[i]._id,
+            });
             let steals = [0, 0, 0, 0, 0, 0, 0];
             for (let j = 0; j < result.length; j++) {
                 steals[result[j]["quarter"] - 1] += 1;
             }
             returnObject[i]["steal"] = steals;
-            result = await this.TurnoverService.getByPlayerId(
-                playerStats[i]._id
-            );
+            result = await this.TurnoverService.get({
+                playerId: playerStats[i]._id,
+            });
             let turnovers = [0, 0, 0, 0, 0, 0, 0];
             for (let j = 0; j < result.length; j++) {
                 turnovers[result[j]["quarter"] - 1] += 1;
@@ -130,14 +140,13 @@ class PlayerStatService {
     delete = async (id) => {
         try {
             await this.model.deleteOne({ _id: id }).exec();
-            await this.AssistService.deleteByPlayerId(id);
-            await this.BlockService.deleteByPlayerId(id);
-            await this.FoulService.deleteByPlayerId(id);
-            await this.PointService.deleteByPlayerId(id);
-            await this.ReboundService.deleteByPlayerId(id);
-            await this.StealService.deleteByPlayerId(id);
-            await this.TurnoverService.deleteByPlayerId(id);
-            return true;
+            await this.AssistService.delete({ playerId: id });
+            await this.BlockService.delete({ playerId: id });
+            await this.FoulService.delete({ playerId: id });
+            await this.PointService.delete({ playerId: id });
+            await this.ReboundService.delete({ playerId: id });
+            await this.StealService.delete({ playerId: id });
+            await this.TurnoverService.delete({ playerId: id });
         } catch (err) {
             throw err;
         }
@@ -145,8 +154,10 @@ class PlayerStatService {
 
     deleteByGameId = async (gameId) => {
         try {
-            await this.model.deleteMany({ gameId: gameId }).exec();
-            return true;
+            let players = await this.model.find({ gameId: gameId });
+            players.forEach((player) => {
+                this.delete({ playerId: player._id });
+            });
         } catch (err) {
             throw err;
         }

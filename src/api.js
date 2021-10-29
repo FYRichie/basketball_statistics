@@ -30,7 +30,7 @@ const findGameById = async (id) => {
     const {
         data: { data },
     } = await instance.get(`/game?gameId=${id}`);
-    console.log(data);
+    // console.log(data);
     return data;
 };
 
@@ -63,7 +63,7 @@ const findPlayerStatByGameId = async (gameId) => {
     const {
         data: { data },
     } = await instance.get(`/playerstat?gameId=${gameId}`);
-    console.log(data);
+    // console.log(data);
     return data;
 };
 
@@ -96,21 +96,22 @@ const createAssist = async (gameId, playerId, quarter) => {
     return id;
 };
 
-const findAssist = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.get("/assist", { constrain: constrain });
-    return data;
-};
+// const findAssist = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.get("/assist", { constrain: constrain });
+//     return data;
+// };
 
 const deleteAssist = async (gameId, playerId, quarter) => {
     const {
         data: { message },
-    } = await instance.post("/deleteAssist", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter,
-        quarter,
+    } = await instance.delete("/assist", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+        },
     });
     return message;
 };
@@ -127,20 +128,22 @@ const createBlock = async (gameId, playerId, quarter) => {
     return id;
 };
 
-const findBlock = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.post("/findBlock", { constrain: constrain });
-    return data;
-};
+// const findBlock = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.post("/findBlock", { constrain: constrain });
+//     return data;
+// };
 
 const deleteBlock = async (gameId, playerId, quarter) => {
     const {
         data: { message },
-    } = await instance.post("/deleteBlock", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter: quarter,
+    } = await instance.delete("/block", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+        },
     });
     return message;
 };
@@ -158,21 +161,23 @@ const createFoul = async (gameId, playerId, quarter, foulType) => {
     return id;
 };
 
-const findFoul = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.post("/findFoul", { constrain: constrain });
-    return data;
-};
+// const findFoul = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.post("/findFoul", { constrain: constrain });
+//     return data;
+// };
 
 const deleteFoul = async (gameId, playerId, quarter, foulType) => {
     const {
         data: { message },
-    } = await instance.post("/deleteFoul", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter: quarter,
-        foulType: foulType,
+    } = await instance.delete("/foul", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+            foulType: foulType,
+        },
     });
     return message;
 };
@@ -191,22 +196,24 @@ const createPoint = async (gameId, playerId, quarter, pointType, made) => {
     return id;
 };
 
-const findPoint = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.post("/findPoint", { constrain: constrain });
-    return data;
-};
+// const findPoint = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.post("/findPoint", { constrain: constrain });
+//     return data;
+// };
 
 const deletePoint = async (gameId, playerId, quarter, pointType, made) => {
     const {
         data: { message },
-    } = await instance.post("/deletePoint", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter: quarter,
-        pointType: pointType,
-        made: made,
+    } = await instance.delete("/point", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+            pointType: pointType,
+            made: made,
+        },
     });
     return message;
 };
@@ -225,21 +232,23 @@ const createRebound = async (gameId, playerId, quarter, reboundType) => {
     return id;
 };
 
-const findRebound = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.post("/findRebound", { constrain: constrain });
-    return data;
-};
+// const findRebound = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.post("/findRebound", { constrain: constrain });
+//     return data;
+// };
 
 const deleteRebound = async (gameId, playerId, quarter, reboundType) => {
     const {
         data: { message },
-    } = await instance.post("/deleteRebound", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter: quarter,
-        reboundType: reboundType,
+    } = await instance.delete("/rebound", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+            reboundType: reboundType,
+        },
         // 'offensive', 'defensive'
     });
     return message;
@@ -257,20 +266,22 @@ const createSteal = async (gameId, playerId, quarter) => {
     return id;
 };
 
-const findSteal = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.post("/findSteal", { constrain: constrain });
-    return data;
-};
+// const findSteal = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.post("/findSteal", { constrain: constrain });
+//     return data;
+// };
 
 const deleteSteal = async (gameId, playerId, quarter) => {
     const {
         data: { message },
-    } = await instance.post("/deleteSteal", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter: quarter,
+    } = await instance.delete("/steal", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+        },
     });
     return message;
 };
@@ -287,20 +298,22 @@ const createTurnover = async (gameId, playerId, quarter) => {
     return id;
 };
 
-const findTurnover = async (constrain) => {
-    const {
-        data: { data },
-    } = await instance.post("/findTurnover", { constrain: constrain });
-    return data;
-};
+// const findTurnover = async (constrain) => {
+//     const {
+//         data: { data },
+//     } = await instance.get("/turnover", { constrain: constrain });
+//     return data;
+// };
 
 const deleteTurnover = async (gameId, playerId, quarter) => {
     const {
         data: { message },
-    } = await instance.post("/deleteTurnover", {
-        gameId: gameId,
-        playerId: playerId,
-        quarter: quarter,
+    } = await instance.delete("/turnover", {
+        data: {
+            gameId: gameId,
+            playerId: playerId,
+            quarter: quarter,
+        },
     });
     return message;
 };
@@ -316,24 +329,24 @@ export {
     deletePlayerStat,
     // updatePlayerStat,
     createAssist,
-    findAssist,
+    // findAssist,
     deleteAssist,
     createBlock,
-    findBlock,
+    // findBlock,
     deleteBlock,
     createFoul,
-    findFoul,
+    // findFoul,
     deleteFoul,
     createPoint,
-    findPoint,
+    // findPoint,
     deletePoint,
     createRebound,
-    findRebound,
+    // findRebound,
     deleteRebound,
     createSteal,
-    findSteal,
+    // findSteal,
     deleteSteal,
     createTurnover,
-    findTurnover,
+    // findTurnover,
     deleteTurnover,
 };

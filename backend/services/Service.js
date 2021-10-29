@@ -8,45 +8,28 @@ class Service {
         return await this.model.find({});
     };
 
-    getByGameId = async (id) => {
-        return await this.model.find({ gameId: id });
-    };
-
-    getByPlayerId = async (id) => {
-        return await this.model.find({ playerId: id });
+    get = async (constrain) => {
+        return await this.model.find(constrain);
     };
 
     create = async (object) => {
-        await this.model.create(object, (err, instance) => {
-            if (err) {
-                throw err;
-            } else {
-                return instance;
-            }
+        // let instance;
+        return await this.model.create(object).then((instance) => {
+            return instance;
         });
     };
 
-    deleteOne = async (playerId, quarter) => {
+    deleteOne = async (constrain) => {
         try {
-            await this.model
-                .deleteOne({ playerId: playerId, quarter: quarter })
-                .exec();
+            await this.model.deleteOne(constrain).exec();
         } catch (err) {
             throw err;
         }
     };
 
-    deleteByPlayerId = async (playerId) => {
+    delete = async (constrain) => {
         try {
-            await this.model.deleteMany({ playerId: playerId }).exec();
-        } catch (err) {
-            throw err;
-        }
-    };
-
-    deleteByGameId = async (gameId) => {
-        try {
-            await this.model.deleteMany({ gameId: gameId }).exec();
+            await this.model.deleteMany(constrain).exec();
         } catch (err) {
             throw err;
         }

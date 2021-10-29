@@ -29,6 +29,7 @@ class PlayerStatController {
             } else {
                 objects = await this.service.getAll();
             }
+            console.log(objects);
             res.status(200).send({ data: objects });
         } catch (err) {
             res.status(403).send({ message: err.toString() });

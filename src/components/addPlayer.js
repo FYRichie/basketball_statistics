@@ -27,8 +27,8 @@ import {
 const AddPlayer = (props) => {
     const { gameID } = useParams();
     const {
-        players,
-        setPlayers,
+        // players,
+        // setPlayers,
         playersObject,
         setPlayersObject,
         setPlayersDisplayObject,
@@ -61,19 +61,19 @@ const AddPlayer = (props) => {
                 playerName
             );
 
-            const newPlayers = [
-                ...players,
-                {
-                    ID: playerID,
-                    num: playerNum,
-                    name: playerName,
-                },
-            ];
-            setPlayers(newPlayers);
+            // const newPlayers = [
+            //     ...players,
+            //     {
+            //         ID: playerID,
+            //         num: playerNum,
+            //         name: playerName,
+            //     },
+            // ];
+            // setPlayers(newPlayers);
             const _playersObject = [
                 ...playersObject,
                 {
-                    ID: playerID,
+                    id: playerID,
                     num: playerNum,
                     name: playerName,
                     score: {
@@ -119,23 +119,23 @@ const AddPlayer = (props) => {
         setAlertText("");
     };
     const handleDeletePlayer = async (ID) => {
-        const deletePlayer = players.find((p) => p.ID === ID);
-        setPlayers(players.filter((p) => p.ID !== ID));
-        await deletePlayerStat(deletePlayer.ID);
-        const _po = playersObject.filter((p) => p.ID !== ID);
+        const deletePlayer = playersObject.find((p) => p.id === ID);
+        // setPlayers(players.filter((p) => p.ID !== ID));
+        await deletePlayerStat(deletePlayer.id);
+        const _po = playersObject.filter((p) => p.id !== ID);
         setPlayersObject(_po);
         setPlayersDisplayObject(createPlayersDisplayObject(_po));
     };
     const getPlayerList = () => {
-        return players.map((p) => {
+        return playersObject.map((p) => {
             return (
-                <ListItem key={p.ID}>
+                <ListItem key={p.id}>
                     <ListItemAvatar>
-                        <Avatar>{p.num}</Avatar>
+                        <Avatar>{p.number}</Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={p.name} />
                     <IconButton
-                        onClick={() => handleDeletePlayer(p.ID)}
+                        onClick={() => handleDeletePlayer(p.id)}
                         edge="end"
                     >
                         <DeleteIcon />
@@ -150,7 +150,7 @@ const AddPlayer = (props) => {
             <DialogTitle>修改球員名單</DialogTitle>
             <DialogContent>
                 <List>{getPlayerList()}</List>
-                {players.length < 15 ? (
+                {playersObject.length < 15 ? (
                     <Box
                         component="form"
                         sx={{
@@ -186,7 +186,7 @@ const AddPlayer = (props) => {
                 ) : (
                     <div />
                 )}
-                {players.length < 5 ? (
+                {playersObject.length < 5 ? (
                     <Alert style={{ margin: "10px" }} severity="warning">
                         球員人數不足5人
                     </Alert>

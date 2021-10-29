@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
+} from "@material-ui/core";
 import { createGame } from "../api";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -16,7 +23,7 @@ function CreateNewGame(props) {
     const handleCreate = async () => {
         // call axios.js
         let id = await createGame(new Date(), opponent);
-        console.log(id);
+        // console.log(id);
         await setGameID(id);
         // console.log(gameID);
         history.push(`/game/${id}`);
@@ -34,7 +41,11 @@ function CreateNewGame(props) {
                     Create New Game
                 </Button>
             </Box>
-            <Dialog maxWidth="md" open={createOpened} onClose={() => setCreateOpened(false)}>
+            <Dialog
+                maxWidth="md"
+                open={createOpened}
+                onClose={() => setCreateOpened(false)}
+            >
                 <DialogTitle>新增比賽</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -48,7 +59,11 @@ function CreateNewGame(props) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCreate} variant="outlined" style={{ margin: "10px" }}>
+                    <Button
+                        onClick={handleCreate}
+                        variant="outlined"
+                        style={{ margin: "10px" }}
+                    >
                         Create
                     </Button>
                 </DialogActions>
