@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+// import { Route } from "react-router-dom";
 import React from "react";
 import HistoryGames from "./historyGames";
 import CreateNewGame from "./createNewGame";
@@ -14,7 +14,11 @@ const HistoryAndCreate = (props) => {
                 spacing={0}
                 direction="column"
                 justifyContent="center"
-                style={{ alignItems: "center", minHeight: "100vh", flexWrap: "nowrap" }}
+                style={{
+                    alignItems: "center",
+                    minHeight: "100vh",
+                    flexWrap: "nowrap",
+                }}
             >
                 <Typography variant="h2" style={{ margin: "20px" }}>
                     Game Records
