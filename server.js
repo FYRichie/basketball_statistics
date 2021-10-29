@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(function (req, res, next) {
     res.header(
         "Access-Control-Allow-Origin",
-        "'http://ntueebasketball.herokuapp.com"
+        "http://ntueebasketball.herokuapp.com"
     );
     res.header(
         "Access-Control-Allow-Headers",
