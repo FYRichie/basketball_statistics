@@ -9,11 +9,12 @@ import {
     TablePagination,
     Container,
     Grid,
+    Button,
 } from "@material-ui/core";
 import { Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { findAllGame } from "../api";
+import { findAllGame, deleteGame } from "../api";
 import moment from "moment";
 
 const columns = [
@@ -56,6 +57,19 @@ export default function HistoryGames() {
             });
         }
     };
+
+    const handleDeleteGame = async (id, opponent) => {
+        setAlert({
+            open: true,
+            severity: "warning",
+            msg: "Are you sure to delete game with " + opponent + "?",
+            action: () => {
+                const newGameData = gameData.filter((game) => game._id !== id);
+                setGameData(newGameData);
+                deleteGame(id);
+            },
+        });
+    };
     useEffect(() => handleGameReload(), []);
     return (
         <Container>
@@ -73,6 +87,13 @@ export default function HistoryGames() {
                                         {column.label}
                                     </TableCell>
                                 ))}
+                                <TableCell
+                                    key="delete"
+                                    align={undefined}
+                                    style={{ minWidth: 30 }}
+                                >
+                                    Delete
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -83,16 +104,17 @@ export default function HistoryGames() {
                                 )
                                 .map((row) => {
                                     return (
-                                        <TableRow
-                                            onClick={() =>
-                                                handleEnterGame(row._id)
-                                            }
-                                        >
+                                        <TableRow>
                                             {columns.map((column) => {
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell
                                                         align={column.align}
+                                                        onClick={() =>
+                                                            handleEnterGame(
+                                                                row._id
+                                                            )
+                                                        }
                                                     >
                                                         {column.format
                                                             ? column.format(
@@ -102,6 +124,17 @@ export default function HistoryGames() {
                                                     </TableCell>
                                                 );
                                             })}
+                                            <TableCell
+                                                align={undefined}
+                                                onClick={() =>
+                                                    handleDeleteGame(
+                                                        row._id,
+                                                        row.opponent
+                                                    )
+                                                }
+                                            >
+                                                X
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -125,6 +158,15 @@ export default function HistoryGames() {
                 >
                     <Alert variant="filled" severity={alert?.severity}>
                         {alert?.msg}
+                        {
+                            <Button
+                                color="inherit"
+                                size="small"
+                                onClick={alert?.action}
+                            >
+                                Ok
+                            </Button>
+                        }
                     </Alert>
                 </Snackbar>
             </Grid>

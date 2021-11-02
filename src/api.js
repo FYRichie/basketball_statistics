@@ -41,13 +41,6 @@ const deleteGame = async (id) => {
     return message;
 };
 
-// const updateGame = async (id, myGame) => {
-//     const {
-//         data: { message },
-//     } = await instance.post("/updateGame", { id: id, game: myGame });
-//     return message;
-// };
-
 const createPlayerStat = async (gameId, number, name) => {
     const {
         data: { id },
@@ -74,16 +67,6 @@ const deletePlayerStat = async (playerId) => {
     return message;
 };
 
-// const updatePlayerStat = async (id, myPlayerStat) => {
-//     const {
-//         data: { message },
-//     } = await instance.post("/updatePlayerStat", {
-//         id: id,
-//         game: myPlayerStat,
-//     });
-//     return message;
-// };
-
 const createAssist = async (gameId, playerId, quarter) => {
     const {
         data: { id },
@@ -95,13 +78,6 @@ const createAssist = async (gameId, playerId, quarter) => {
 
     return id;
 };
-
-// const findAssist = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.get("/assist", { constrain: constrain });
-//     return data;
-// };
 
 const deleteAssist = async (gameId, playerId, quarter) => {
     const {
@@ -128,13 +104,6 @@ const createBlock = async (gameId, playerId, quarter) => {
     return id;
 };
 
-// const findBlock = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.post("/findBlock", { constrain: constrain });
-//     return data;
-// };
-
 const deleteBlock = async (gameId, playerId, quarter) => {
     const {
         data: { message },
@@ -160,13 +129,6 @@ const createFoul = async (gameId, playerId, quarter, foulType) => {
 
     return id;
 };
-
-// const findFoul = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.post("/findFoul", { constrain: constrain });
-//     return data;
-// };
 
 const deleteFoul = async (gameId, playerId, quarter, foulType) => {
     const {
@@ -195,13 +157,6 @@ const createPoint = async (gameId, playerId, quarter, pointType, made) => {
 
     return id;
 };
-
-// const findPoint = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.post("/findPoint", { constrain: constrain });
-//     return data;
-// };
 
 const deletePoint = async (gameId, playerId, quarter, pointType, made) => {
     const {
@@ -232,13 +187,6 @@ const createRebound = async (gameId, playerId, quarter, reboundType) => {
     return id;
 };
 
-// const findRebound = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.post("/findRebound", { constrain: constrain });
-//     return data;
-// };
-
 const deleteRebound = async (gameId, playerId, quarter, reboundType) => {
     const {
         data: { message },
@@ -266,13 +214,6 @@ const createSteal = async (gameId, playerId, quarter) => {
     return id;
 };
 
-// const findSteal = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.post("/findSteal", { constrain: constrain });
-//     return data;
-// };
-
 const deleteSteal = async (gameId, playerId, quarter) => {
     const {
         data: { message },
@@ -298,13 +239,6 @@ const createTurnover = async (gameId, playerId, quarter) => {
     return id;
 };
 
-// const findTurnover = async (constrain) => {
-//     const {
-//         data: { data },
-//     } = await instance.get("/turnover", { constrain: constrain });
-//     return data;
-// };
-
 const deleteTurnover = async (gameId, playerId, quarter) => {
     const {
         data: { message },
@@ -323,30 +257,21 @@ export {
     findAllGame,
     findGameById,
     deleteGame,
-    // updateGame,
     createPlayerStat,
     findPlayerStatByGameId,
     deletePlayerStat,
-    // updatePlayerStat,
     createAssist,
-    // findAssist,
     deleteAssist,
     createBlock,
-    // findBlock,
     deleteBlock,
     createFoul,
-    // findFoul,
     deleteFoul,
     createPoint,
-    // findPoint,
     deletePoint,
     createRebound,
-    // findRebound,
     deleteRebound,
     createSteal,
-    // findSteal,
     deleteSteal,
     createTurnover,
-    // findTurnover,
     deleteTurnover,
 };

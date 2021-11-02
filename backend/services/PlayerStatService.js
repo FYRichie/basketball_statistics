@@ -128,12 +128,8 @@ class PlayerStatService {
     };
 
     create = async (playerStat) => {
-        await this.model.create(playerStat, (err, instance) => {
-            if (err) {
-                throw err;
-            } else {
-                return instance;
-            }
+        return this.model.create(playerStat).then((instance) => {
+            return instance;
         });
     };
 
@@ -154,9 +150,9 @@ class PlayerStatService {
 
     deleteByGameId = async (gameId) => {
         try {
-            let players = await this.model.find({ gameId: gameId });
+            let players = this.model.find({ gameId: gameId });
             players.forEach((player) => {
-                this.delete({ playerId: player._id });
+                this.delete(player._id);
             });
         } catch (err) {
             throw err;

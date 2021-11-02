@@ -17,18 +17,14 @@ class GameService {
     };
 
     create = async (game) => {
-        await this.model.create(game, (err, instance) => {
-            if (err) {
-                throw err;
-            } else {
-                return instance;
-            }
+        return this.model.create(game).then((instance) => {
+            return instance;
         });
     };
 
     delete = async (gameId) => {
         try {
-            await this.model.deleteOne({ _d: gameId }).exec();
+            await this.model.deleteOne({ _id: gameId }).exec();
             await this.PlayerStatService.deleteByGameId(gameId);
         } catch (err) {
             throw err;

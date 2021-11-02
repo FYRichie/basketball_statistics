@@ -71,7 +71,10 @@ export const createPlayersDisplayObject = (playersObject) => {
         const deffensiveRebound = p.rebound.deffensive.reduce((a, b) => a + b);
         const assist = p.assist.reduce((a, b) => a + b);
         const steal = p.steal.reduce((a, b) => a + b);
-        const foul = p.foul.reduce((a, b) => a + b).length;
+        let foul = 0;
+        for (let i = 0; i < 7; i++) {
+            foul += p.foul[i].length;
+        }
         const block = p.block.reduce((a, b) => a + b);
         const turnover = p.turnover.reduce((a, b) => a + b);
         const playerStatus = p.oncourt ? "上場" : "下場";
