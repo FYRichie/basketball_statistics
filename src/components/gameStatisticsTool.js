@@ -71,7 +71,10 @@ export const createPlayersDisplayObject = (playersObject) => {
         const deffensiveRebound = p.rebound.deffensive.reduce((a, b) => a + b);
         const assist = p.assist.reduce((a, b) => a + b);
         const steal = p.steal.reduce((a, b) => a + b);
-        const foul = p.foul.reduce((a, b) => a + b).length;
+        let foul = 0;
+        for (let i = 0; i < 7; i++) {
+            foul += p.foul[i].length;
+        }
         const block = p.block.reduce((a, b) => a + b);
         const turnover = p.turnover.reduce((a, b) => a + b);
         const playerStatus = p.oncourt ? "上場" : "下場";
@@ -100,6 +103,7 @@ export const createPlayersDisplayObject = (playersObject) => {
         return p1.playerStatus > p2.playerStatus;
     });
 };
+
 export const getType = () => {
     return columns.map((c, index) => {
         if (index < 1)
@@ -118,6 +122,7 @@ export const getType = () => {
         );
     });
 };
+
 export const foulType = [
     {
         type: "P",
@@ -144,6 +149,7 @@ export const foulType = [
         desc: "違反運動道德",
     },
 ];
+
 export const getFoulType = (handleChange, selectedNum, seletcedID) => {
     return foulType.map((f) => {
         return (
@@ -155,6 +161,7 @@ export const getFoulType = (handleChange, selectedNum, seletcedID) => {
         );
     });
 };
+
 export const initState = async (
     gameID,
     setOpponent,
@@ -165,15 +172,8 @@ export const initState = async (
     setQuarterPoints
 ) => {
     const [game] = await findGameById(gameID);
-    // console.log(data);
     setOpponent(game.opponent);
     const P = await findPlayerStatByGameId(gameID);
-    console.log(P);
-    // setPlayers(
-    //     P.map((p) => {
-    //         return { ID: p.ID, num: p.num, name: p.name };
-    //     })
-    // );
     setPlayersObject(P);
     setPlayersDisplayObject(createPlayersDisplayObject(P));
     let _qP = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0 };
@@ -186,9 +186,9 @@ export const initState = async (
                 3 * P[j].score.threepointer.made[i];
         }
     }
-    // console.log(_qP);
     setQuarterPoints(_qP);
 };
+
 export const QuarterStatistics = (props) => {
     const { quarterPoints } = props;
     const sumValues = (obj) => Object.values(obj).reduce((a, b) => a + b);

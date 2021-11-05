@@ -19,20 +19,11 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Alert, AlertTitle } from "@mui/material";
 import { createPlayerStat, deletePlayerStat } from "../api";
-import {
-    // createPlayersObject,
-    createPlayersDisplayObject,
-} from "./gameStatisticsTool";
+import { createPlayersDisplayObject } from "./gameStatisticsTool";
 
 const AddPlayer = (props) => {
     const { gameID } = useParams();
-    const {
-        // players,
-        // setPlayers,
-        playersObject,
-        setPlayersObject,
-        setPlayersDisplayObject,
-    } = props;
+    const { playersObject, setPlayersObject, setPlayersDisplayObject } = props;
     const [playerNum, setPlayerNum] = useState("");
     const [playerName, setPlayerName] = useState("");
     const [openAlert, setOpenAlert] = useState(false);
@@ -60,16 +51,6 @@ const AddPlayer = (props) => {
                 playerNum,
                 playerName
             );
-
-            // const newPlayers = [
-            //     ...players,
-            //     {
-            //         ID: playerID,
-            //         num: playerNum,
-            //         name: playerName,
-            //     },
-            // ];
-            // setPlayers(newPlayers);
             const _playersObject = [
                 ...playersObject,
                 {
@@ -102,12 +83,6 @@ const AddPlayer = (props) => {
                     oncourt: false,
                 },
             ];
-            // await createPlayersObject(
-            //     newPlayers,
-            //     gameID,
-            //     newPlayers.length - 1,
-            //     playersObject
-            // );
             setPlayersObject(_playersObject);
             const playersDisplayObject =
                 createPlayersDisplayObject(_playersObject);
@@ -120,8 +95,7 @@ const AddPlayer = (props) => {
     };
     const handleDeletePlayer = async (ID) => {
         const deletePlayer = playersObject.find((p) => p.id === ID);
-        // setPlayers(players.filter((p) => p.ID !== ID));
-        await deletePlayerStat(deletePlayer.id);
+        deletePlayerStat(deletePlayer.id);
         const _po = playersObject.filter((p) => p.id !== ID);
         setPlayersObject(_po);
         setPlayersDisplayObject(createPlayersDisplayObject(_po));

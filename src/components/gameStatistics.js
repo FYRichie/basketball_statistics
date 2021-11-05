@@ -21,6 +21,8 @@ import {
     MenuItem,
     Select,
     Container,
+    Switch,
+    FormControlLabel,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import {
@@ -73,10 +75,9 @@ const GameStatisticsComponent = () => {
     const [selectedLabel, setSelectedLabel] = useState("");
     const [period, setPeriod] = useState(1);
     const [openAddPlayer, setOpenAddPlayer] = useState(false);
-    // const [players, setPlayers] = useState([]);
     const [playersObject, setPlayersObject] = useState([]);
     const [playersDisplayObject, setPlayersDisplayObject] = useState([]);
-    const [clickTime, setClickTime] = useState(null);
+    const [clean, setClean] = useState(false);
     const [quarterPoints, setQuarterPoints] = useState({
         1: 0,
         2: 0,
@@ -236,27 +237,7 @@ const GameStatisticsComponent = () => {
         setQuarterPoints(_qP);
         setPlayersDisplayObject(createPlayersDisplayObject(playersObject));
     };
-    const handleMouseDown = (e) => {
-        const [num, name, id, label] = e.target.id.split("-");
-        // console.log(e.target.id);
-        if (id === "playerTotalScore" || id === "rebound") return;
-        else if (id === "playerStatus") {
-            changePlayersObject(num, id, 0);
-            return;
-        }
-        let time = new Date();
-        setSelectedNum(num);
-        setSelectedName(name);
-        setSelectedID(id);
-        setSelectedLabel(label);
-        if (id === "foul") {
-            setClickTime(null);
-            setOpenChangeStatistics(true);
-        }
-        let clickId = setTimeout(openChangeStatisticsDialog, 400);
-        setClickTime(clickId);
-        // setOpenChangeStatistics(true);
-    };
+
     const handleCloseChange = () => {
         setSelectedNum("");
         setSelectedName("");
@@ -264,8 +245,8 @@ const GameStatisticsComponent = () => {
         setSelectedLabel("");
         setOpenChangeStatistics(false);
     };
+
     const handleChange = (playerNum, event, add) => {
-        // console.log(playerNum, event, add);
         changePlayersObject(playerNum, event, add);
         // send data including period to backend
         handleCloseChange();
@@ -277,33 +258,35 @@ const GameStatisticsComponent = () => {
         setOpenAddPlayer(false);
     };
 
-    const handleMouseUp = () => {
-        if (clickTime !== null) {
-            clearTimeout(clickTime);
-            handleChange(selectedNum, selectedID, 1);
-            setClickTime(null);
+    const handleClick = (e) => {
+        const [num, name, id, label] = e.target.id.split("-");
+        setSelectedNum(num);
+        setSelectedName(name);
+        setSelectedID(id);
+        setSelectedLabel(label);
+        if (id === "playerTotalScore" || id === "rebound") return;
+        else if (id === "playerStatus") {
+            changePlayersObject(num, id, 0);
+            return;
+        } else if (id === "foul") {
+            setOpenChangeStatistics(true);
+        } else {
+            if (clean === false) {
+                handleChange(num, id, 1);
+            } else {
+                setOpenChangeStatistics(true);
+            }
         }
-        // let time = new Date();
-        // if (clickTime !== null) {
-        //     if (time.getTime() - clickTime > 400) {
-
-        // } else {
-        //         handleChange(selectedNum, selectedID, 1);
-        //         setClickTime(null);
-        //         setOpenChangeStatistics(false);
-        //     }
-        // }
     };
 
     const openChangeStatisticsDialog = () => {
         setOpenChangeStatistics(true);
-        setClickTime(null);
     };
+
     useEffect(() => {
         initState(
             gameID,
             setOpponent,
-            // setPlayers,
             setPlayersObject,
             setPlayersDisplayObject,
             setQuarterPoints
@@ -311,7 +294,7 @@ const GameStatisticsComponent = () => {
     }, []);
 
     return (
-        <Container onMouseUp={handleMouseUp} onTouchUp={handleMouseUp}>
+        <Container>
             <Box sx={{ marginTop: 100, width: "inherit" }}>
                 <AppBar position="static">
                     <Toolbar>
@@ -340,6 +323,20 @@ const GameStatisticsComponent = () => {
                             </FormControl>
                         </Box>
                         <Button onClick={handleAddPlayer}>更改球員</Button>
+                        <FormControlLabel
+                            align="right"
+                            control={
+                                <Switch
+                                    checked={clean}
+                                    onChange={() => {
+                                        setClean(
+                                            true ? clean === false : false
+                                        );
+                                    }}
+                                />
+                            }
+                            label="clean"
+                        />
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -380,11 +377,8 @@ const GameStatisticsComponent = () => {
                                                     <StickyTableCell>
                                                         <TableCell
                                                             key={c.id}
-                                                            onMouseDown={
-                                                                handleMouseDown
-                                                            }
-                                                            onTouchDown={
-                                                                handleMouseDown
+                                                            onClick={
+                                                                handleClick
                                                             }
                                                             id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                                         >
@@ -395,9 +389,7 @@ const GameStatisticsComponent = () => {
                                             return (
                                                 <TableCell
                                                     key={c.id}
-                                                    onMouseDown={
-                                                        handleMouseDown
-                                                    }
+                                                    onClick={handleClick}
                                                     id={`${p.number}-${p.name}-${c.id}-${c.label}`}
                                                 >
                                                     {value}
@@ -412,7 +404,6 @@ const GameStatisticsComponent = () => {
                 </TableContainer>
                 <QuarterStatistics quarterPoints={quarterPoints} />
             </Paper>
-
             <Dialog
                 open={openChangeStatistics}
                 onClose={handleCloseChange}
@@ -447,8 +438,6 @@ const GameStatisticsComponent = () => {
             </Dialog>
             <Dialog open={openAddPlayer} onClose={handleCloseAddPlayer}>
                 <AddPlayer
-                    // players={players}
-                    // setPlayers={setPlayers}
                     playersObject={playersObject}
                     setPlayersObject={setPlayersObject}
                     setPlayersDisplayObject={setPlayersDisplayObject}

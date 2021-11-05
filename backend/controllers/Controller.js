@@ -7,6 +7,7 @@ class Controller {
     create = async (req, res) => {
         try {
             const instance = await this.service.create(req.body);
+            console.log("Create: ", instance);
             res.status(200).send({ message: "success", id: instance._id });
         } catch (err) {
             console.log(err);
@@ -55,6 +56,7 @@ class Controller {
     delete = async (req, res) => {
         try {
             await this.service.deleteOne(req.body);
+            console.log("Delete: ", req.body);
             res.status(200).send({ message: "success" });
         } catch (err) {
             res.status(403).send({ message: err.toString() });

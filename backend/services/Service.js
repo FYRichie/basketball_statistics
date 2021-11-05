@@ -13,7 +13,6 @@ class Service {
     };
 
     create = async (object) => {
-        // let instance;
         return await this.model.create(object).then((instance) => {
             return instance;
         });
