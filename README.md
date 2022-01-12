@@ -18,6 +18,7 @@ npm run server
 
 # Structure
 backend: for the backend api
+
 ├── controllers: the function for each route
 ├── models: db table model
 ├── routes: wrap the route and the function
